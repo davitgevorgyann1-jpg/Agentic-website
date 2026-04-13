@@ -16,6 +16,7 @@ const typeLabels: Record<Agent['type'], string> = {
   operational: 'Operational Agent',
   strategic: 'Strategic Agent',
   infinite: 'Infinite Agent',
+  messenger: 'The Messenger',
 }
 
 const typeColors: Record<Agent['type'], { bg: string; text: string; border: string; speechBg: string; speechBorder: string }> = {
@@ -46,6 +47,13 @@ const typeColors: Record<Agent['type'], { bg: string; text: string; border: stri
     border: 'border-violet-200',
     speechBg: 'bg-violet-50/50',
     speechBorder: 'border-l-4 border-violet-300',
+  },
+  messenger: {
+    bg: 'bg-violet-50',
+    text: 'text-violet-700',
+    border: 'border-violet-200',
+    speechBg: 'bg-violet-50/60',
+    speechBorder: 'border-l-4 border-violet-400',
   },
 }
 

@@ -1,5 +1,5 @@
-export type AgentType = 'broken' | 'operational' | 'strategic' | 'infinite'
-export type AgentStatus = 'amber-flicker' | 'amber-dim' | 'red-static' | 'green-solid' | 'blue-pulse' | 'empty'
+export type AgentType = 'broken' | 'operational' | 'strategic' | 'infinite' | 'messenger'
+export type AgentStatus = 'amber-flicker' | 'amber-dim' | 'red-static' | 'green-solid' | 'blue-pulse' | 'empty' | 'violet-pulse'
 
 export interface Agent {
   id: number
@@ -139,9 +139,19 @@ export const agents: Agent[] = [
       "I don't exist yet. I'm the agent your company needs but hasn't imagined. Maybe I monitor regulatory changes in your industry. Maybe I optimize your pricing in real-time based on competitive data. Maybe I cross-reference customer support patterns with product usage to predict churn before it happens. Maybe I do something nobody's ever built before. The agents above are just examples. Every company has unique strategic needs, unique processes, and unique blind spots. I'm the agent that fills yours. But first, someone needs to understand your strategy deeply enough to know what I should be. That's not my job. That's the architect's.",
     section: 'infinite',
   },
+  {
+    id: 13,
+    name: 'The Messenger',
+    type: 'messenger',
+    status: 'violet-pulse',
+    oneLiner: "I know what we need. And it's not another agent.",
+    dialogue: "I've watched every agent on this page. The broken ones with no purpose. The strategic ones that actually work. The operational ones connected to something bigger. And the one that doesn't exist yet. Here's what I've learned: none of us can build ourselves. We can't decide our own purpose. We can't map ourselves to your strategy. We can't design the system we're part of. That requires someone who understands both the strategy and the technology — someone who knows which of us should exist, what purpose to give us, and how to connect us. That's not an agent. That's an architect. Meet Davit.",
+    section: 'infinite',
+  },
 ]
 
 export const brokenAgents = agents.filter((a) => a.section === 'broken')
 export const operationsAgents = agents.filter((a) => a.section === 'operations')
 export const strategicAgents = agents.filter((a) => a.section === 'strategic')
 export const infiniteAgent = agents.find((a) => a.section === 'infinite')!
+export const messengerAgent = agents.find((a) => a.type === 'messenger')!

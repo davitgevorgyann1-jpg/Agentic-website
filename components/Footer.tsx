@@ -4,80 +4,76 @@ import { motion } from 'framer-motion'
 
 export default function Footer() {
   return (
-    <footer className="relative py-16 overflow-hidden bg-slate-900">
-      {/* Subtle gradient */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 60% 80% at 50% 100%, rgba(59,130,246,0.07) 0%, transparent 70%)',
-        }}
-      />
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
-          {/* Left */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
+    <>
+      {/* ─── CTA Section ──────────────────────────────────────────────────── */}
+      <section id="cta" className="relative py-24 px-6" style={{ background: '#0a0a0f' }}>
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
-            className="flex flex-col gap-3"
+            transition={{ duration: 0.6 }}
+            className="text-[24px] font-normal text-white mb-4"
           >
-            <h2
-              className="font-display text-2xl font-semibold text-white"
-              style={{ fontFamily: 'var(--font-newsreader)' }}
-            >
-              Davit Gevorgyan
-            </h2>
-            <p className="text-sm text-slate-400 max-w-xs leading-relaxed font-body">
-              Strategy-Led AI Transformation. Helping companies build AI systems that know what they&rsquo;re doing and why.
-            </p>
-          </motion.div>
+            Ready to align your AI with your strategy?
+          </motion.h2>
 
-          {/* Right */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55, delay: 0.1 }}
-            className="flex flex-col gap-4"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-[14px] mb-8"
+            style={{ color: 'rgba(255,255,255,0.4)' }}
+          >
+            Book a free 30-minute discovery call. I&apos;ll tell you honestly whether my approach fits.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             <a
               href="#assessment"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-sm font-medium transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-white text-black text-sm font-medium px-8 py-3.5 rounded hover:bg-gray-200 transition-colors"
             >
-              Book a Strategy Call
+              Book a Discovery Call
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
-
-            <div className="flex gap-4">
-              {[
-                { href: '#broken', label: 'Broken World' },
-                { href: '#operations', label: 'Operations' },
-                { href: '#strategy', label: 'Strategy' },
-              ].map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-xs text-slate-500 hover:text-slate-300 transition-colors duration-150 font-body"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
           </motion.div>
         </div>
+      </section>
 
-        {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
-          <span className="font-body">&copy; {new Date().getFullYear()} Davit Gevorgyan. All rights reserved.</span>
-          <span className="font-body italic text-slate-600">
-            &ldquo;Build the foundation. The rest becomes possible.&rdquo;
+      {/* ─── Footer ───────────────────────────────────────────────────────── */}
+      <footer className="relative px-6 py-6" style={{ background: '#0a0a0f', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span className="text-[11px]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+            &copy; {new Date().getFullYear()} Davit Gevorgyan
           </span>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] transition-colors hover:text-white/50"
+              style={{ color: 'rgba(255,255,255,0.25)' }}
+            >
+              LinkedIn
+            </a>
+            <a
+              href="mailto:hello@davitgevorgyan.com"
+              className="text-[11px] transition-colors hover:text-white/50"
+              style={{ color: 'rgba(255,255,255,0.25)' }}
+            >
+              Email
+            </a>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   )
 }

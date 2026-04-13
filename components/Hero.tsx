@@ -31,9 +31,8 @@ const PARTICLES = [
   { x: 44, y: 62, size: 5, delay: 0.8,  dur: 3.2 },
 ]
 
-const words = 'Every company is building AI agents.'.split(' ')
+const words  = 'Every company is building AI agents.'.split(' ')
 const words2 = 'Almost none of them know why.'.split(' ')
-const allWords = [...words, ...words2]
 
 const wordVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -105,7 +104,6 @@ export default function Hero() {
           className="font-display text-[clamp(2.4rem,7vw,4.8rem)] font-semibold leading-[1.1] tracking-tight text-slate-800"
           style={{ fontFamily: 'var(--font-newsreader)' }}
         >
-          {/* First sentence */}
           <span className="block mb-1">
             {words.map((word, i) => (
               <motion.span
@@ -120,7 +118,6 @@ export default function Hero() {
               </motion.span>
             ))}
           </span>
-          {/* Second sentence — italic for contrast */}
           <span className="block italic text-slate-600">
             {words2.map((word, i) => (
               <motion.span
@@ -156,37 +153,13 @@ export default function Hero() {
           className="flex flex-col items-center gap-1"
         >
           <div className="animate-bounce-arrow">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="text-slate-400"
-            >
-              <path
-                d="M6 9l6 6 6-6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-slate-400">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
           <div className="animate-bounce-arrow" style={{ animationDelay: '0.15s' }}>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="text-slate-300"
-            >
-              <path
-                d="M6 9l6 6 6-6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-slate-300">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
         </motion.div>

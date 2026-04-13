@@ -1,5 +1,5 @@
 import Nav from '@/components/Nav'
-import Hero from '@/components/Hero'
+import HeroDark from '@/components/HeroDark'
 import BrokenWorld from '@/components/BrokenWorld'
 import TurningPoint from '@/components/TurningPoint'
 import OperationsLayer from '@/components/OperationsLayer'
@@ -8,38 +8,55 @@ import InfiniteLayer from '@/components/InfiniteLayer'
 import Architect from '@/components/Architect'
 import Assessment from '@/components/Assessment'
 import Footer from '@/components/Footer'
+import FullpageScroll from '@/components/FullpageScroll'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#f8f9fc]">
-      <Nav />
+    <main style={{ background: '#0a0a0f' }}>
+      {/* Global grid overlay */}
+      <div className="grid-overlay" />
 
-      {/* Section 1: Hero */}
-      <Hero />
+      <FullpageScroll>
+        {/* Section 1: Hero */}
+        <div style={{ position: 'relative' }}>
+          <Nav />
+          <HeroDark />
+        </div>
 
-      {/* Section 2: Broken World */}
-      <BrokenWorld />
+        {/* Section 2: Broken World */}
+        <div className="fp-section-scroll">
+          <BrokenWorld />
+        </div>
 
-      {/* Section 3: Turning Point / The Problem */}
-      <TurningPoint />
+        {/* Section 3: Turning Point */}
+        <TurningPoint />
 
-      {/* Section 4: Operations Layer */}
-      <OperationsLayer />
+        {/* Section 4: Strategic Layer */}
+        <div className="fp-section-scroll">
+          <StrategicLayer />
+        </div>
 
-      {/* Section 5: Strategic Layer */}
-      <StrategicLayer />
+        {/* Section 5: Operations Layer */}
+        <div className="fp-section-scroll">
+          <OperationsLayer />
+        </div>
 
-      {/* Section 6: Infinite Layer */}
-      <InfiniteLayer />
+        {/* Section 6: Infinite Layer */}
+        <div className="fp-section-scroll">
+          <InfiniteLayer />
+        </div>
 
-      {/* Section 7: The Architect */}
-      <Architect />
+        {/* Section 7: The Architect */}
+        <Architect />
 
-      {/* Section 8: Assessment */}
-      <Assessment />
+        {/* Section 8: Assessment */}
+        <div className="fp-section-scroll">
+          <Assessment />
+        </div>
 
-      {/* Footer */}
-      <Footer />
+        {/* Section 9: CTA + Footer */}
+        <Footer />
+      </FullpageScroll>
     </main>
   )
 }
