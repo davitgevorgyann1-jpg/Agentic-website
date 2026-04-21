@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { openCalendly } from '@/lib/calendly'
 
 type Category = 'Strategy' | 'Operations' | 'Alignment'
 
@@ -422,7 +423,8 @@ export default function Assessment() {
                   Book a free discovery call. I&apos;ll tell you honestly whether my approach fits.
                 </p>
                 <a
-                  href="#cta"
+                  href="#"
+                  onClick={(e) => { e.preventDefault(); openCalendly() }}
                   className="inline-flex items-center gap-2 bg-white text-black text-xs font-medium px-6 py-3 rounded hover:bg-gray-200 transition-colors"
                 >
                   Book a Discovery Call

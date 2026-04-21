@@ -171,7 +171,7 @@ function AgentRow({ agent, index }: { agent: StrategicAgent; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="flex items-start gap-5 py-5 cursor-default"
+      className="agent-row flex items-start gap-5 py-5 cursor-default"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -249,7 +249,7 @@ export default function StrategicLayer() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="mt-10">
-          <div className="section-divider" style={{ color: `${BLUE}66` }}>
+          <div className="section-divider" style={{ color: 'rgba(255,255,255,0.35)' }}>
             <span style={{ background: `linear-gradient(to right, transparent, ${BLUE}44, transparent)`, height: 1 }} />
             <span className="whitespace-nowrap">4 AGENTS DEPLOYED | ALL SYSTEMS NOMINAL</span>
             <span style={{ background: `linear-gradient(to right, transparent, ${BLUE}44, transparent)`, height: 1 }} />

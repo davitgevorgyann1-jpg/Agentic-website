@@ -193,7 +193,7 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="flex items-start gap-5 py-5 cursor-default"
+      className="agent-row flex items-start gap-5 py-5 cursor-default"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -249,7 +249,11 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
 
 export default function BrokenWorld() {
   return (
-    <section id="broken" className="relative pb-16 px-6" style={{ background: '#0a0a0f', paddingTop: 80 }}>
+    <section
+      id="broken"
+      className="relative pb-16 px-6"
+      style={{ background: '#0a0a0f', paddingTop: 80 }}
+    >
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -295,7 +299,7 @@ export default function BrokenWorld() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-10"
         >
-          <div className="section-divider" style={{ color: 'rgba(217,119,6,0.4)' }}>
+          <div className="section-divider" style={{ color: 'rgba(255,255,255,0.35)' }}>
             <span style={{ background: 'linear-gradient(to right, transparent, rgba(217,119,6,0.3), transparent)', height: 1 }} />
             <span className="whitespace-nowrap">4 AGENTS DETECTED | STATUS: MISALIGNED</span>
             <span style={{ background: 'linear-gradient(to right, transparent, rgba(217,119,6,0.3), transparent)', height: 1 }} />

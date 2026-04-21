@@ -1,5 +1,7 @@
 'use client'
 
+import { openCalendly } from '@/lib/calendly'
+
 export default function Nav() {
   return (
     <header
@@ -11,8 +13,9 @@ export default function Nav() {
           Strategy Architected
         </a>
         <a
-          href="#assessment"
-          className="inline-flex items-center gap-2 bg-white text-black text-xs font-medium px-4 py-2 rounded hover:bg-gray-200 transition-colors"
+          href="#"
+          onClick={(e) => { e.preventDefault(); openCalendly() }}
+          className="inline-flex items-center gap-2 bg-white text-black text-xs font-medium px-4 py-2.5 rounded hover:bg-gray-200 transition-colors"
         >
           Book a Call
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

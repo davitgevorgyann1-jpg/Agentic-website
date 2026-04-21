@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Calendar } from 'lucide-react'
+import { openCalendly } from '@/lib/calendly'
 
 interface Props {
   children: React.ReactNode[]
@@ -84,6 +85,7 @@ function SectionProgress({
   return (
     <div
       ref={containerRef}
+      className="fp-sidebar"
       style={{
         position: 'fixed',
         left: 0,
@@ -148,6 +150,7 @@ function SectionProgress({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
+                  onClick={() => goTo(i)}
                   style={{
                     position: 'absolute',
                     left: w + 14,
@@ -158,8 +161,8 @@ function SectionProgress({
                     color: 'rgba(255,255,255,0.7)',
                     fontFamily: 'var(--font-mono)',
                     letterSpacing: '0.04em',
-                    pointerEvents: 'none',
                     userSelect: 'none',
+                    cursor: 'pointer',
                   }}
                 >
                   {label}
@@ -186,6 +189,7 @@ function FloatingCTA({ visible }: { visible: boolean }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
+          className="fp-cta"
           style={{
             position: 'fixed',
             bottom: 24,
@@ -200,7 +204,8 @@ function FloatingCTA({ visible }: { visible: boolean }) {
           <AnimatePresence>
             {hovered && (
               <motion.a
-                href="#assessment"
+                href="#"
+                onClick={(e) => { e.preventDefault(); openCalendly() }}
                 initial={{ opacity: 0, x: 8 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 8 }}
@@ -226,7 +231,8 @@ function FloatingCTA({ visible }: { visible: boolean }) {
 
           {/* Circle button */}
           <motion.a
-            href="#assessment"
+            href="#"
+            onClick={(e) => { e.preventDefault(); openCalendly() }}
             animate={{
               width:      hovered ? 56 : 48,
               height:     hovered ? 56 : 48,
@@ -348,6 +354,31 @@ export default function FullpageScroll({ children }: Props) {
     const id = section?.querySelector('section')?.id
     if (id) window.history.replaceState(null, '', `#${id}`)
   }, [current])
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1)
+      if (!hash) return
+      const idx = sectionRefs.current.findIndex(
+        el => el?.querySelector('section')?.id === hash
+      )
+      if (idx >= 0) goTo(idx)
+    }
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [goTo])
+
+  useEffect(() => {
+    const handleGoto = (e: Event) => {
+      const { id } = (e as CustomEvent).detail
+      const idx = sectionRefs.current.findIndex(
+        el => el?.querySelector('section')?.id === id
+      )
+      if (idx >= 0) goTo(idx)
+    }
+    window.addEventListener('fp:goto', handleGoto)
+    return () => window.removeEventListener('fp:goto', handleGoto)
+  }, [goTo])
 
   return (
     <div style={{ height: '100vh', overflow: 'hidden', position: 'relative' }}>

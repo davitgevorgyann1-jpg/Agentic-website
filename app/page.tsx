@@ -13,8 +13,6 @@ import FullpageScroll from '@/components/FullpageScroll'
 export default function Home() {
   return (
     <main style={{ background: '#0a0a0f' }}>
-      {/* Global grid overlay */}
-      <div className="grid-overlay" />
 
       <FullpageScroll>
         {/* Section 1: Hero */}

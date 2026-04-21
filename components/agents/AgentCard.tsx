@@ -11,15 +11,6 @@ interface AgentCardProps {
   index: number
 }
 
-// Kept for any external consumers that may reference it
-export const ROBOT_IMAGE: Record<string, string> = {
-  broken:      '/robots/robot-broken.png',
-  operational: '/robots/robot-operational.png',
-  strategic:   '/robots/robot-strategic.png',
-  infinite:    '/robots/robot-strategic.png',
-  messenger:   '/robots/robot-strategic.png',
-}
-
 // Tint color behind the robot
 const ROBOT_TINT: Record<string, string> = {
   broken:      'rgba(254,243,199,0.35)',

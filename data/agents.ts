@@ -150,8 +150,3 @@ export const agents: Agent[] = [
   },
 ]
 
-export const brokenAgents = agents.filter((a) => a.section === 'broken')
-export const operationsAgents = agents.filter((a) => a.section === 'operations')
-export const strategicAgents = agents.filter((a) => a.section === 'strategic')
-export const infiniteAgent = agents.find((a) => a.section === 'infinite')!
-export const messengerAgent = agents.find((a) => a.type === 'messenger')!

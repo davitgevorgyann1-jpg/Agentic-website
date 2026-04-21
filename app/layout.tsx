@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
+import CalendlyOverlay from '@/components/CalendlyOverlay'
 import './globals.css'
 
 const jetbrains = JetBrains_Mono({
@@ -63,6 +64,7 @@ export default function RootLayout({
     <html lang="en" className={jetbrains.variable}>
       <body className={`${jetbrains.className} antialiased`} style={{ background: '#0a0a0f' }}>
         {children}
+        <CalendlyOverlay />
       </body>
     </html>
   )

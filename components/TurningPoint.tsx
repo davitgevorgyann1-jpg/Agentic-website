@@ -110,7 +110,7 @@ export default function TurningPoint() {
 
       {/* Center content */}
       <div className="relative z-10 max-w-[1100px] w-full mx-auto text-center">
-        <h2 className="text-[28px] font-normal text-white leading-relaxed mb-8">
+        <h2 className="text-[clamp(20px,5vw,28px)] font-normal text-white leading-relaxed mb-8">
           {line1.map((word, i) => (
             <motion.span
               key={i}
@@ -133,14 +133,14 @@ export default function TurningPoint() {
           transition={{ delay: line1.length * 0.08 + 0.1, duration: 0.6, ease: 'easeOut' }}
           className="mx-auto mb-8"
           style={{
-            width: 200,
+            width: 'min(200px, 60vw)',
             height: '0.5px',
             background: 'linear-gradient(90deg, #D97706, #2563EB)',
             transformOrigin: 'center',
           }}
         />
 
-        <p className="text-[22px] font-normal leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
+        <p className="text-[clamp(16px,4vw,22px)] font-normal leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)' }}>
           {line2.map((word, i) => (
             <motion.span
               key={i}

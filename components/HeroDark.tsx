@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { openCalendly } from '@/lib/calendly'
 
 // ─── TextScramble ────────────────────────────────────────────────────────────
 
@@ -102,27 +103,42 @@ function generateRainDrops(): RainDrop[] {
   const singleCount = 220
   const wordCount = 28
 
+  // Stratified x positions — divide viewport into equal slots with small jitter,
+  // then shuffle so assignment is random but coverage is even (no clusters, no gaps)
+  const totalStreams = singleCount + wordCount
+  const xPositions = Array.from({ length: totalStreams }, (_, i) =>
+    ((i + 0.15 + Math.random() * 0.7) / totalStreams) * 100
+  )
+  for (let i = xPositions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[xPositions[i], xPositions[j]] = [xPositions[j], xPositions[i]]
+  }
+
+  let xIdx = 0
+
   // Single character drops
   for (let i = 0; i < singleCount; i++) {
+    const flashDuration = 4 + Math.random() * 6
     drops.push({
-      x: Math.random() * 100,
+      x: xPositions[xIdx++],
       speed: 8 + Math.random() * 18,
       delay: Math.random() * -20,
       char: RAIN_CHARS[Math.floor(Math.random() * RAIN_CHARS.length)],
       opacity: 0.4,
-      flashDelay: Math.random() * 12,
-      flashDuration: 4 + Math.random() * 6,
+      // Negative delay = animation starts mid-cycle → gold flashes appear immediately on load
+      flashDelay: -(Math.random() * flashDuration),
+      flashDuration,
     })
   }
 
-  // Vertical strategic word columns (~12% of visible columns)
+  // Vertical strategic word columns
   for (let i = 0; i < wordCount; i++) {
     const word = STRATEGIC_WORDS[Math.floor(Math.random() * STRATEGIC_WORDS.length)]
-    const x = Math.random() * 100
+    const x = xPositions[xIdx++]
     const speed = 8 + Math.random() * 18
     const baseDelay = Math.random() * -20
-    const flashDelay = Math.random() * 12
     const flashDuration = 4 + Math.random() * 6
+    const flashDelay = -(Math.random() * flashDuration)
 
     // Each letter falls at the same x/speed, staggered so they form a vertical column
     for (let j = 0; j < word.length; j++) {
@@ -201,7 +217,7 @@ export default function HeroDark() {
     >
       {/* Raining characters */}
       {mounted && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="rain-container absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
           {RAIN_DROPS.map((drop, i) => (
             <span
               key={i}
@@ -251,9 +267,10 @@ export default function HeroDark() {
             Explore ↓
           </button>
           <a
-            href="#assessment"
+            href="#"
+            onClick={(e) => { e.preventDefault(); openCalendly() }}
             className="px-6 py-2.5 text-sm font-medium text-white border border-white/50 rounded hover:border-white hover:bg-white/5 transition-colors"
-            style={{ fontFamily: 'var(--font-mono)' }}
+            style={{ fontFamily: 'var(--font-mono)', cursor: 'pointer' }}
           >
             Book a Discovery Call
           </a>
@@ -266,13 +283,7 @@ export default function HeroDark() {
         style={{ background: 'linear-gradient(to bottom, transparent, #0a0a0f)' }}
       />
 
-      {/* Scramble dud character style */}
-      <style jsx global>{`
-        .scramble-dud {
-          color: #0f0;
-          opacity: 0.7;
-        }
-      `}</style>
+
     </section>
   )
 }

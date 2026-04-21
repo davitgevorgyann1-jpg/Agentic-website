@@ -120,7 +120,13 @@ body {
 
 @keyframes rain-flash {
   0%, 90%, 100% { color: #475569; text-shadow: none; }
-  95%           { color: #00ff00; text-shadow: 0 0 8px rgba(0,255,0,0.8), 0 0 20px rgba(0,255,0,0.4); }
+  95%           { color: #E2B97F; text-shadow: 0 0 8px rgba(226,185,127,0.8), 0 0 20px rgba(226,185,127,0.4); }
+}
+
+/* ─── Text scramble dud characters ─── */
+.scramble-dud {
+  color: #E2B97F;
+  opacity: 0.7;
 }
 
 /* ─── Utility classes ─── */
@@ -133,7 +139,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 9px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--text-tertiary);
@@ -143,6 +149,18 @@ body {
   content: '';
   flex: 1;
   height: 1px;
+}
+
+/* ─── Calendly panel — responsive width ─── */
+#calendly-panel {
+  width: 500px;
+  max-width: 100vw;
+}
+@media (min-width: 768px) {
+  #calendly-panel {
+    width: 80vw;
+    max-width: 80vw;
+  }
 }
 
 /* ─── Corner frame accents ─── */
@@ -167,4 +185,26 @@ body {
   bottom: 0; right: 0;
   border-bottom: 1.5px solid;
   border-right: 1.5px solid;
+}
+
+/* ─── Mobile optimizations ─── */
+@media (max-width: 767px) {
+  /* Hide sidebar nav dots — too small to be useful, and takes 70px of narrow viewport */
+  .fp-sidebar { display: none !important; }
+
+  /* Hide floating bottom-right CTA — all sections have inline CTAs */
+  .fp-cta { display: none !important; }
+
+  /* Hide rain animation — 220 animated elements cause jank on mobile */
+  .rain-container { display: none; }
+
+  /* Agent rows: smaller gap so robot + text fit comfortably */
+  .agent-row { gap: 12px !important; }
+
+  /* Calendly panel: full width on small screens */
+  #calendly-panel {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-left: none !important;
+  }
 }
