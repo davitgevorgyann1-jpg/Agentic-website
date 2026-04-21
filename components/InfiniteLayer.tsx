@@ -99,13 +99,13 @@ const PURPLE = '#7C3AED'
 export default function InfiniteLayer() {
   return (
     <section
+      id="agents"
       style={{
         background: '#0a0a0f',
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         padding: '0 24px',
-        overflow: 'hidden',
       }}
     >
 

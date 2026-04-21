@@ -41,6 +41,7 @@ const CIRCUIT_LINES = [
 export default function TurningPoint() {
   return (
     <section
+      id="turning-point"
       className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
       style={{ background: '#0a0a0f' }}
     >

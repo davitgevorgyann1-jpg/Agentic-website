@@ -149,6 +149,8 @@ const GREEN = '#16A34A'
 
 function AgentRow({ agent, index }: { agent: OpsAgent; index: number }) {
   const [hovered, setHovered] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const isOpen = hovered || expanded
   const RobotSvg = ROBOTS[index]
 
   return (
@@ -157,21 +159,30 @@ function AgentRow({ agent, index }: { agent: OpsAgent; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="agent-row flex items-start gap-5 py-5 cursor-default"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="agent-row flex items-start gap-5 py-5 cursor-pointer"
+      onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(true) }}
+      onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(false) }}
+      onClick={() => setExpanded(e => !e)}
     >
-      <div className="flex-shrink-0 transition-opacity duration-300" style={{ opacity: hovered ? 0.9 : 0.7 }}>
+      <div className="flex-shrink-0 transition-opacity duration-300" style={{ opacity: isOpen ? 0.9 : 0.7 }}>
         <RobotSvg />
       </div>
-      <div className="flex-1 transition-all duration-300" style={{ borderLeft: `2px solid ${hovered ? GREEN : `${GREEN}55`}`, paddingLeft: 16 }}>
+      <div className="flex-1 transition-all duration-300" style={{ borderLeft: `2px solid ${isOpen ? GREEN : `${GREEN}55`}`, paddingLeft: 16 }}>
         <div className="flex items-center gap-3 flex-wrap">
           <span className="animate-pulse-steady flex-shrink-0" style={{ width: 7, height: 7, borderRadius: '50%', background: GREEN, display: 'inline-block' }} />
           <span className="text-[16px] font-bold text-white">{agent.name}</span>
           <span className="text-[11px] uppercase tracking-[0.15em] px-2 py-0.5 rounded-full border" style={{ color: GREEN, borderColor: `${GREEN}66` }}>{agent.status}</span>
+          <span
+            className={`agent-expand-hint${expanded ? ' expanded' : ''}`}
+            style={{ marginLeft: 'auto', color: `${GREEN}bb` }}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
         </div>
         <p className="text-[15px] italic mt-1.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{agent.quote}</p>
-        <div className="overflow-hidden transition-all duration-[400ms] ease-in-out" style={{ maxHeight: hovered ? 300 : 0, opacity: hovered ? 1 : 0 }}>
+        <div className="overflow-hidden transition-all duration-[400ms] ease-in-out" style={{ maxHeight: isOpen ? 600 : 0, opacity: isOpen ? 1 : 0 }}>
           <div className="mt-3 pl-3 text-[14px] leading-[1.7]" style={{ color: 'rgba(255,255,255,0.5)', borderLeft: `1px solid ${GREEN}44` }}>{agent.dialogue}</div>
         </div>
       </div>

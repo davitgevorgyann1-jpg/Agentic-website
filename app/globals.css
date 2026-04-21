@@ -187,8 +187,50 @@ body {
   border-right: 1.5px solid;
 }
 
+/* ─── Agent expand chevron ─── */
+.agent-expand-hint {
+  display: none;
+  transition: transform 300ms ease;
+  flex-shrink: 0;
+}
+.agent-expand-hint.expanded {
+  transform: rotate(180deg);
+  animation: none !important;
+}
+
+@keyframes chevron-pulse {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50%       { opacity: 1;   transform: translateY(2px); }
+}
+
+/* Nav menu button — desktop hidden */
+.nav-menu-btn { display: none !important; }
+/* Nav menu overlay — desktop hidden */
+.nav-menu-overlay { display: none !important; }
+
 /* ─── Mobile optimizations ─── */
 @media (max-width: 767px) {
+  /* Expand chevron */
+  .agent-expand-hint {
+    display: inline-flex;
+    align-items: center;
+  }
+  .agent-expand-hint:not(.expanded) {
+    animation: chevron-pulse 1.8s ease-in-out infinite;
+  }
+
+  /* Nav: always fixed so hamburger is reachable while scrolling */
+  .site-header {
+    position: fixed !important;
+    background: rgba(10,10,15,0.9) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid rgba(255,255,255,0.06) !important;
+  }
+  /* Hamburger button */
+  .nav-menu-btn { display: flex !important; }
+  /* Full-screen menu overlay */
+  .nav-menu-overlay { display: flex !important; }
   /* Normal continuous scroll — disable fullpage cage */
   body {
     overflow-y: auto;

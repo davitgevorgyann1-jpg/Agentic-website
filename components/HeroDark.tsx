@@ -203,10 +203,7 @@ export default function HeroDark() {
   }, [])
 
   const scrollDown = useCallback(() => {
-    const hero = document.getElementById('hero')
-    if (hero) {
-      window.scrollTo({ top: hero.offsetHeight, behavior: 'smooth' })
-    }
+    window.dispatchEvent(new CustomEvent('fp:goto', { detail: { id: 'broken' } }))
   }, [])
 
   return (

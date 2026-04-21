@@ -185,6 +185,8 @@ const AGENTS: BrokenAgent[] = [
 
 function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
   const [hovered, setHovered] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const isOpen = hovered || expanded
   const RobotSvg = ROBOT_COMPONENTS[index]
 
   return (
@@ -193,18 +195,19 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="agent-row flex items-start gap-5 py-5 cursor-default"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="agent-row flex items-start gap-5 py-5 cursor-pointer"
+      onMouseEnter={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(true) }}
+      onMouseLeave={() => { if (window.matchMedia('(hover: hover)').matches) setHovered(false) }}
+      onClick={() => setExpanded(e => !e)}
     >
-      <div className="flex-shrink-0 transition-opacity duration-300" style={{ opacity: hovered ? 0.9 : 0.7 }}>
+      <div className="flex-shrink-0 transition-opacity duration-300" style={{ opacity: isOpen ? 0.9 : 0.7 }}>
         <RobotSvg />
       </div>
       <div
         className="flex-1 transition-all duration-300"
         style={{
           borderLeft: `2px solid ${agent.statusColor}`,
-          borderLeftColor: hovered ? agent.statusColor : `${agent.statusColor}55`,
+          borderLeftColor: isOpen ? agent.statusColor : `${agent.statusColor}55`,
           paddingLeft: 16,
         }}
       >
@@ -214,7 +217,7 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             style={{
               width: 7, height: 7, borderRadius: '50%',
               border: `1.5px solid ${agent.statusColor}`,
-              background: hovered ? agent.statusColor : 'transparent',
+              background: isOpen ? agent.statusColor : 'transparent',
               display: 'inline-block',
             }}
           />
@@ -225,13 +228,21 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
           >
             {agent.status}
           </span>
+          <span
+            className={`agent-expand-hint${expanded ? ' expanded' : ''}`}
+            style={{ marginLeft: 'auto', color: `${agent.statusColor}bb` }}
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
         </div>
         <p className="text-[15px] italic mt-1.5" style={{ color: 'rgba(255,255,255,0.4)' }}>
           {agent.quote}
         </p>
         <div
           className="overflow-hidden transition-all duration-[400ms] ease-in-out"
-          style={{ maxHeight: hovered ? 300 : 0, opacity: hovered ? 1 : 0 }}
+          style={{ maxHeight: isOpen ? 600 : 0, opacity: isOpen ? 1 : 0 }}
         >
           <div
             className="mt-3 pl-3 text-[14px] leading-[1.7]"
