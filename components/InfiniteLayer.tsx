@@ -109,10 +109,28 @@ export default function InfiniteLayer() {
       }}
     >
 
-      {/* ─── Top half: The Infinite Agent (48vh) ─────────────── */}
+      {/* ─── Section header ──────────────────────────────────── */}
+      <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%', paddingTop: 32 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex items-center gap-3"
+        >
+          <span
+            className="animate-pulse-steady"
+            style={{ width: 7, height: 7, borderRadius: '50%', background: '#06B6D4', display: 'inline-block', boxShadow: '0 0 8px rgba(6,182,212,0.6)' }}
+          />
+          <span className="text-[12px] uppercase tracking-[0.15em]" style={{ color: '#06B6D4' }}>YOUR AGENT</span>
+          <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, rgba(6,182,212,0.4), transparent)' }} />
+        </motion.div>
+      </div>
+
+      {/* ─── Top half: The Infinite Agent ───────────────────────── */}
       <div
         style={{
-          height: '48vh',
+          height: '42vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -126,7 +144,7 @@ export default function InfiniteLayer() {
           style={{ maxWidth: 1100, width: '100%', textAlign: 'center' }}
         >
           {/* Robot + floating ∞ below */}
-          <div style={{ marginBottom: 24, display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ marginBottom: 14, display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }}>
             <motion.div
               animate={{ opacity: [0.5, 0.9, 0.5] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
@@ -153,7 +171,7 @@ export default function InfiniteLayer() {
           </div>
 
           {/* Name + status */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 10 }}>
             <span
               style={{
                 width: 7,
@@ -204,7 +222,7 @@ export default function InfiniteLayer() {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          padding: '24px 0',
+          padding: '10px 0',
           flexShrink: 0,
         }}
       >
@@ -237,12 +255,12 @@ export default function InfiniteLayer() {
             style={{ maxWidth: 1100, width: '100%', textAlign: 'center' }}
           >
             {/* Purple robot */}
-            <div style={{ marginBottom: 24, display: 'inline-block', opacity: 0.6 }}>
+            <div style={{ marginBottom: 12, display: 'inline-block', opacity: 0.6 }}>
               <MessengerBot />
             </div>
 
             {/* Name + status */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 10 }}>
               <span
                 className="animate-pulse-steady"
                 style={{
@@ -317,8 +335,8 @@ export default function InfiniteLayer() {
           </motion.div>
         </div>
 
-        {/* 80px bottom breathing room */}
-        <div style={{ height: 80, flexShrink: 0 }} />
+        {/* Bottom breathing room */}
+        <div style={{ height: 20, flexShrink: 0 }} />
 
       </div>
     </section>

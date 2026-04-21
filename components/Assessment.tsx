@@ -200,17 +200,20 @@ export default function Assessment() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="mb-12"
         >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="text-[10px] uppercase tracking-[0.15em]" style={{ color: 'rgba(255,255,255,0.4)' }}>
-              FREE ASSESSMENT
-            </span>
+          <div className="flex items-center gap-3 mb-6">
+            <span
+              className="animate-pulse-steady"
+              style={{ width: 7, height: 7, borderRadius: '50%', background: '#94A3B8', display: 'inline-block', boxShadow: '0 0 8px rgba(148,163,184,0.5)' }}
+            />
+            <span className="text-[12px] uppercase tracking-[0.15em]" style={{ color: '#94A3B8' }}>FREE ASSESSMENT</span>
+            <div className="flex-1 h-px" style={{ background: 'linear-gradient(to right, rgba(148,163,184,0.4), transparent)' }} />
           </div>
-          <h2 className="text-[22px] font-normal text-white mb-3">
+          <h2 className="text-[22px] font-normal text-white mb-3 text-center">
             How aligned is your AI transformation with your strategy?
           </h2>
-          <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+          <p className="text-[12px] text-center" style={{ color: 'rgba(255,255,255,0.4)' }}>
             7 questions. Instant score. Specific recommendations.
           </p>
         </motion.div>

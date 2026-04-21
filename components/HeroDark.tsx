@@ -98,14 +98,12 @@ interface RainDrop {
   flashDuration: number
 }
 
-function generateRainDrops(): RainDrop[] {
+function generateRainDrops(singleCount: number, wordCount: number): RainDrop[] {
   const drops: RainDrop[] = []
-  const singleCount = 220
-  const wordCount = 28
+  const totalStreams = singleCount + wordCount
 
   // Stratified x positions — divide viewport into equal slots with small jitter,
   // then shuffle so assignment is random but coverage is even (no clusters, no gaps)
-  const totalStreams = singleCount + wordCount
   const xPositions = Array.from({ length: totalStreams }, (_, i) =>
     ((i + 0.15 + Math.random() * 0.7) / totalStreams) * 100
   )
@@ -157,8 +155,9 @@ function generateRainDrops(): RainDrop[] {
   return drops
 }
 
-// Pre-generate so server & client match
-const RAIN_DROPS = generateRainDrops()
+// Desktop: full density. Mobile: reduced to ~70 drops to avoid jank.
+const RAIN_DROPS        = generateRainDrops(220, 28)
+const RAIN_DROPS_MOBILE = generateRainDrops(55, 8)
 
 // ─── HeroDark Component ─────────────────────────────────────────────────────
 
@@ -175,9 +174,14 @@ export default function HeroDark() {
   const textRef = useRef<HTMLSpanElement>(null)
   const scramblerRef = useRef<TextScramble | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
   }, [])
 
   useEffect(() => {
@@ -215,7 +219,7 @@ export default function HeroDark() {
       {/* Raining characters */}
       {mounted && (
         <div className="rain-container absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          {RAIN_DROPS.map((drop, i) => (
+          {(isMobile ? RAIN_DROPS_MOBILE : RAIN_DROPS).map((drop, i) => (
             <span
               key={i}
               className="absolute rain-char"
