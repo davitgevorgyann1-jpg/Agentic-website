@@ -110,7 +110,7 @@ export default function InfiniteLayer() {
     >
 
       {/* ─── Section header ──────────────────────────────────── */}
-      <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%', paddingTop: 32 }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%', paddingTop: 32, paddingBottom: 28 }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
