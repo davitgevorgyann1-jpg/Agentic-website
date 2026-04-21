@@ -269,9 +269,18 @@ function FloatingCTA({ visible }: { visible: boolean }) {
 
 export default function FullpageScroll({ children }: Props) {
   const [current, setCurrent] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const isAnimating = useRef(false)
   const total = children.length
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const goTo = useCallback(
     (index: number) => {
@@ -291,7 +300,10 @@ export default function FullpageScroll({ children }: Props) {
     [current, total],
   )
 
+  // Desktop: wheel / touch / keyboard snap navigation
   useEffect(() => {
+    if (isMobile) return
+
     const onWheel = (e: WheelEvent) => {
       e.preventDefault()
       e.stopPropagation()
@@ -347,15 +359,19 @@ export default function FullpageScroll({ children }: Props) {
       document.removeEventListener('touchend', onTouchEnd)
       window.removeEventListener('keydown', onKey)
     }
-  }, [current, goTo])
+  }, [current, goTo, isMobile])
 
+  // Desktop: sync URL hash to current section
   useEffect(() => {
+    if (isMobile) return
     const section = sectionRefs.current[current]
     const id = section?.querySelector('section')?.id
     if (id) window.history.replaceState(null, '', `#${id}`)
-  }, [current])
+  }, [current, isMobile])
 
+  // Desktop: navigate on hash change
   useEffect(() => {
+    if (isMobile) return
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1)
       if (!hash) return
@@ -366,9 +382,11 @@ export default function FullpageScroll({ children }: Props) {
     }
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [goTo])
+  }, [goTo, isMobile])
 
+  // Desktop: fp:goto custom event
   useEffect(() => {
+    if (isMobile) return
     const handleGoto = (e: Event) => {
       const { id } = (e as CustomEvent).detail
       const idx = sectionRefs.current.findIndex(
@@ -378,8 +396,36 @@ export default function FullpageScroll({ children }: Props) {
     }
     window.addEventListener('fp:goto', handleGoto)
     return () => window.removeEventListener('fp:goto', handleGoto)
-  }, [goTo])
+  }, [goTo, isMobile])
 
+  // Mobile: fp:goto uses scrollIntoView instead of snap
+  useEffect(() => {
+    if (!isMobile) return
+    const handleGoto = (e: Event) => {
+      const { id } = (e as CustomEvent).detail
+      const idx = sectionRefs.current.findIndex(
+        el => el?.querySelector('section')?.id === id
+      )
+      if (idx >= 0) sectionRefs.current[idx]?.scrollIntoView({ behavior: 'smooth' })
+    }
+    window.addEventListener('fp:goto', handleGoto)
+    return () => window.removeEventListener('fp:goto', handleGoto)
+  }, [isMobile])
+
+  // ─── Mobile render: normal continuous scroll ──────────────────────────────
+  if (isMobile) {
+    return (
+      <>
+        {children.map((child, i) => (
+          <div key={i} ref={(el) => { sectionRefs.current[i] = el }}>
+            {child}
+          </div>
+        ))}
+      </>
+    )
+  }
+
+  // ─── Desktop render: fullpage snap ────────────────────────────────────────
   return (
     <div style={{ height: '100vh', overflow: 'hidden', position: 'relative' }}>
       <SectionProgress current={current} total={total} goTo={goTo} />

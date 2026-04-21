@@ -189,6 +189,17 @@ body {
 
 /* ─── Mobile optimizations ─── */
 @media (max-width: 767px) {
+  /* Normal continuous scroll — disable fullpage cage */
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+  /* Let inner-scroll wrappers flow naturally in continuous scroll */
+  .fp-section-scroll {
+    height: auto;
+    overflow-y: visible;
+  }
+
   /* Hide sidebar nav dots — too small to be useful, and takes 70px of narrow viewport */
   .fp-sidebar { display: none !important; }
 
