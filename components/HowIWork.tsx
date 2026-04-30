@@ -18,15 +18,15 @@ const PHASES: Phase[] = [
     number: '01',
     title: 'Strategic Audit',
     subtitle: 'Find the strategy you actually have — not the one in the deck.',
-    body: 'Most leadership teams have 30 "priorities" and treat all of them as equally important. I read your strategy docs, OKRs, and board decks — then I interview your leadership one-on-one and find out what they actually believe. The gap between those two is where the real work lives.',
+    body: 'I read your strategy docs, OKRs, and board decks. I interview your leadership one-on-one. I find the gap between what is written and what is actually believed — and write down what your strategy really is.',
     outcome: 'Three to five priorities. Stack-ranked. Committed to in writing.',
     time: '1–2 weeks',
   },
   {
     number: '02',
     title: 'Alignment Design',
-    subtitle: 'Most companies have strategy. Most have execution. Almost none have the layer that connects them.',
-    body: 'With your priorities locked in, I design what your operations should look like to enforce them — which strategic agents you need, which operational agents you need. If you already have automations running, those get tested against the strategy too — most fail. The result, either way: a blueprint where every piece traces back to a priority.',
+    subtitle: 'Design the layer that turns strategy into execution.',
+    body: 'I take your priorities and design what your operations need to look like. Strategic agents your leadership needs. Operational agents your teams need. Existing automations get tested against the same priorities — most fail. Every piece in the blueprint traces back to a priority.',
     outcome: 'A blueprint: what should exist, what should be kept, what should be killed. Plus the system that prevents future drift.',
     time: '2–3 weeks',
   },
@@ -239,7 +239,7 @@ export default function HowIWork() {
             />
           </div>
           <h2 className="text-[clamp(32px,5vw,48px)] font-bold text-white mb-3">
-            Top down. Always.
+            Strategy first. The rest follows.
           </h2>
           <p
             className="text-[18px] max-w-[820px]"
