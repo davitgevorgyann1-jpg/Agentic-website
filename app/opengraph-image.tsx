@@ -80,8 +80,8 @@ export default async function OGImage() {
             flexDirection: 'column',
           }}
         >
-          <span>Most companies are deploying AI agents</span>
-          <span>that automate the wrong things.</span>
+          <span>I don&apos;t ask what to automate.</span>
+          <span>I ask why.</span>
         </div>
 
         {/* Bottom row: >_ prompt left, byline right */}
