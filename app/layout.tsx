@@ -26,6 +26,10 @@ export const metadata: Metadata = {
     'AI operations',
   ],
   authors: [{ name: 'Davit Gevorgyan' }],
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
