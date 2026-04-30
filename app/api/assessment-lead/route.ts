@@ -5,17 +5,32 @@ import { NextResponse } from 'next/server'
  *
  * Receives a completed assessment + lead context and:
  *   1. Logs the lead (always — visible in Vercel function logs)
- *   2. If RESEND_API_KEY env var is set, also emails NOTIFICATION_EMAIL
- *      with the lead details. Reply-to is the lead's email, so hitting
- *      Reply in the inbox sends straight to them.
+ *   2. If TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID env vars are set,
+ *      sends a push notification to that Telegram chat.
+ *   3. If RESEND_API_KEY + NOTIFICATION_EMAIL env vars are set, also
+ *      emails the lead details with reply-to set to the lead's email.
  *
- * SETUP (one-time, in Vercel dashboard → project → Environment Variables):
- *   RESEND_API_KEY      = (from resend.com — free tier, 100 emails/mo)
- *   NOTIFICATION_EMAIL  = davit.gevorgyann1@gmail.com
+ * Each notification channel is independent — set one, both, or neither.
  *
- * The Resend "onboarding@resend.dev" sender works without domain
- * verification. To send from leads@davitgevorgyan.com later, verify the
- * domain in Resend (DNS records) and update FROM_ADDRESS below.
+ * ─── TELEGRAM SETUP (recommended, ~5 minutes) ─────────────────────────
+ *   1. In Telegram, message @BotFather: /newbot
+ *      Give it a name + handle. BotFather replies with a bot token.
+ *   2. Search for your new bot, open the chat, hit "Start".
+ *   3. Get your chat ID: message @userinfobot — it replies with your ID.
+ *   4. In Vercel → Environment Variables, add:
+ *        TELEGRAM_BOT_TOKEN = (the token from step 1)
+ *        TELEGRAM_CHAT_ID   = (your numeric ID from step 3)
+ *
+ * ─── EMAIL (RESEND) SETUP (optional) ──────────────────────────────────
+ *   1. Sign up at resend.com (free tier).
+ *   2. Create an API key.
+ *   3. In Vercel → Environment Variables, add:
+ *        RESEND_API_KEY     = (the key)
+ *        NOTIFICATION_EMAIL = davit.gevorgyann1@gmail.com
+ *
+ * The default Resend sender (onboarding@resend.dev) works without
+ * domain verification. For leads@davitgevorgyan.com later, verify the
+ * domain in Resend and update FROM_ADDRESS below.
  */
 
 const FROM_ADDRESS = 'Davit Gevorgyan Leads <onboarding@resend.dev>'
@@ -63,7 +78,7 @@ function formatLeadEmailBody(p: AssessmentLeadPayload): string {
   return lines.join('\n')
 }
 
-async function sendNotification(payload: AssessmentLeadPayload): Promise<void> {
+async function sendEmailNotification(payload: AssessmentLeadPayload): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY
   const recipient = process.env.NOTIFICATION_EMAIL
 
@@ -93,6 +108,57 @@ async function sendNotification(payload: AssessmentLeadPayload): Promise<void> {
   if (!res.ok) {
     const errBody = await res.text().catch(() => '(no body)')
     console.error('[assessment-lead] resend error:', res.status, errBody)
+  }
+}
+
+// Escape characters that would break Telegram's MarkdownV2 parsing.
+function tgEscape(s: string): string {
+  return s.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (m) => `\\${m}`)
+}
+
+function formatTelegramMessage(p: AssessmentLeadPayload): string {
+  const lines = [
+    `🔔 *New assessment lead*`,
+    ``,
+    `*Score:* ${p.scores.overall}/100`,
+    `_Strategy ${p.scores.strategy}% · Operations ${p.scores.operations}% · Alignment ${p.scores.alignment}%_`,
+    ``,
+    `📧 ${tgEscape(p.email)}`,
+    `🌐 ${p.websiteUrl ? tgEscape(p.websiteUrl) : '_not provided_'}`,
+    `👤 ${tgEscape(p.role)}`,
+    `🏢 ${tgEscape(p.companyStage)}`,
+  ]
+  if (p.note) {
+    lines.push('', `_Note:_ ${tgEscape(p.note)}`)
+  }
+  return lines.join('\n')
+}
+
+async function sendTelegramNotification(payload: AssessmentLeadPayload): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN
+  const chatId = process.env.TELEGRAM_CHAT_ID
+
+  if (!token || !chatId) {
+    // Graceful degradation: route still succeeds, just no telegram push sent.
+    return
+  }
+
+  const text = formatTelegramMessage(payload)
+
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text,
+      parse_mode: 'MarkdownV2',
+      disable_web_page_preview: true,
+    }),
+  })
+
+  if (!res.ok) {
+    const errBody = await res.text().catch(() => '(no body)')
+    console.error('[assessment-lead] telegram error:', res.status, errBody)
   }
 }
 
@@ -136,13 +202,13 @@ export async function POST(request: Request) {
       ...payload,
     }))
 
-    // 2. Try to send email notification (no-op if env vars missing)
-    try {
-      await sendNotification(payload)
-    } catch (err) {
-      // Log but don't fail the request — the lead is already captured in logs
-      console.error('[assessment-lead] notification failed:', err)
-    }
+    // 2. Fire all notification channels in parallel. Each is independently
+    //    no-op when its env vars are missing. Failures in either don't
+    //    fail the request — the lead is already captured in logs.
+    await Promise.allSettled([
+      sendTelegramNotification(payload),
+      sendEmailNotification(payload),
+    ])
 
     return NextResponse.json({ ok: true })
   } catch (error) {
