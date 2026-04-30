@@ -181,15 +181,15 @@ function AgentRow({ agent, index }: { agent: OpsAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote: 50/50 mix of an earthen-pastel green (#5CD689, hsl 142/60/60)
-            with the original muted gray (~#6F6F6F). Lands at #65A27C — a
-            dusty sage green. Matches the BrokenWorld treatment: same muted
-            register, section-tinted, distinct from the white agent name. */}
+        {/* Quote: 60/40 mix of an earthen-pastel green (#5CD689, hsl 142/60/60)
+            with the muted gray (~#6F6F6F). Lands at #64AD7F — sharper than
+            the 50/50 mix, still muted, but the green identity comes through
+            more clearly. */}
         <p
           style={{
             fontSize: 16,
             fontWeight: 500,
-            color: '#65A27C',
+            color: '#64AD7F',
             lineHeight: 1.55,
             marginTop: 14,
             marginBottom: 4,

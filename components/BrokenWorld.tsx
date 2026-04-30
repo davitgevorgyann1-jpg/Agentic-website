@@ -237,18 +237,16 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote: 50/50 mix of the earthen amber (#D49A5C, RGB 212/154/92)
-            with the original muted gray (rgba(255,255,255,0.4), which on the
-            dark background composites to ~#6F6F6F, RGB 111/111/111). Mixing
-            channel-by-channel lands at #A18465 — a weathered, dusty amber.
-            The hue family is preserved (still amber-orange), but both
-            saturation and brightness drop simultaneously: less vivid than
-            the pure earthen amber, less neutral than the pure gray. */}
+        {/* Quote: 60/40 mix of the earthen amber (#D49A5C, RGB 212/154/92)
+            with the muted gray (~#6F6F6F, RGB 111/111/111). Lands at
+            #AB8963 — sharper than the previous 50/50 mix, still in the
+            muted register (gray is still pulling color down), but the
+            amber identity comes through more clearly. */}
         <p
           style={{
             fontSize: 16,
             fontWeight: 500,
-            color: '#A18465',
+            color: '#AB8963',
             lineHeight: 1.55,
             marginTop: 14,
             marginBottom: 4,
