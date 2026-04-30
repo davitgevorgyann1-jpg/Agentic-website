@@ -181,7 +181,24 @@ function AgentRow({ agent, index }: { agent: OpsAgent; index: number }) {
             </svg>
           </span>
         </div>
-        <p className="text-[15px] italic mt-1.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{agent.quote}</p>
+        {/* Quote: 50/50 mix of an earthen-pastel green (#5CD689, hsl 142/60/60)
+            with the original muted gray (~#6F6F6F). Lands at #65A27C — a
+            dusty sage green. Matches the BrokenWorld treatment: same muted
+            register, section-tinted, distinct from the white agent name. */}
+        <p
+          style={{
+            fontSize: 16,
+            fontWeight: 500,
+            color: '#65A27C',
+            lineHeight: 1.55,
+            marginTop: 14,
+            marginBottom: 4,
+            paddingLeft: 14,
+            borderLeft: `2px solid ${GREEN}`,
+          }}
+        >
+          {agent.quote}
+        </p>
         <div className="overflow-hidden transition-all duration-[400ms] ease-in-out" style={{ maxHeight: isOpen ? 600 : 0, opacity: isOpen ? 1 : 0 }}>
           <div className="mt-3 pl-3 text-[14px] leading-[1.7]" style={{ color: 'rgba(255,255,255,0.5)', borderLeft: `1px solid ${GREEN}44` }}>{agent.dialogue}</div>
         </div>
