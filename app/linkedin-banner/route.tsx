@@ -11,8 +11,13 @@ import { ImageResponse } from 'next/og'
  * pixels). All meaningful content stays in the top half, the right two
  * thirds, or the bottom-right corner — none of which the avatar covers.
  *
- * Same renderer (Satori via next/og), same typography rules as the OG
- * image: do NOT reference unavailable fonts; rely on Inter (the default).
+ * Satori gotchas we've already hit and codified:
+ *   - Do not reference unavailable fonts (e.g. monospace). Satori only
+ *     ships with Inter by default; an unknown font silently produces 0 bytes.
+ *   - Do not put `display: flex` on a <span> that directly contains text.
+ *     Use a <div> for flex containers; let leaf text nodes stay simple.
+ *   - For right-aligning column children, use `alignItems: 'flex-end'` on
+ *     the parent — not `display: flex` on each child.
  */
 
 export const runtime = 'edge'
@@ -34,7 +39,7 @@ export async function GET() {
           position: 'relative',
         }}
       >
-        {/* Subtle grid pattern, matching the website's global overlay */}
+        {/* Subtle grid overlay matching the website's global pattern */}
         <div
           style={{
             position: 'absolute',
@@ -45,7 +50,7 @@ export async function GET() {
           }}
         />
 
-        {/* Top tag */}
+        {/* Top-left: tag */}
         <div
           style={{
             display: 'flex',
@@ -70,14 +75,15 @@ export async function GET() {
               textTransform: 'uppercase',
               letterSpacing: 6,
               fontWeight: 600,
-              display: 'flex',
             }}
           >
             Strategy-Led AI Transformation
           </div>
         </div>
 
-        {/* Punchline — centered vertically, right-aligned to clear the avatar */}
+        {/* Center-right: two-line punchline.
+            justifyContent on the row pushes the block right of the avatar zone;
+            alignItems flex-end on the inner column right-aligns the two lines. */}
         <div
           style={{
             display: 'flex',
@@ -96,25 +102,15 @@ export async function GET() {
               lineHeight: 1.05,
               display: 'flex',
               flexDirection: 'column',
-              textAlign: 'right',
+              alignItems: 'flex-end',
             }}
           >
-            <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              Strategy first.
-            </span>
-            <span
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                color: GOLD,
-              }}
-            >
-              Then build the agents.
-            </span>
+            <div>From products to agents.</div>
+            <div style={{ color: GOLD }}>Strategy is the constant.</div>
           </div>
         </div>
 
-        {/* Bottom-right: >_ + URL */}
+        {/* Bottom-right: >_ mark + URL */}
         <div
           style={{
             position: 'absolute',
@@ -131,7 +127,6 @@ export async function GET() {
               fontSize: 28,
               color: GOLD,
               fontWeight: 800,
-              display: 'flex',
             }}
           >
             {'>_'}
@@ -142,7 +137,6 @@ export async function GET() {
               color: 'rgba(255,255,255,0.5)',
               letterSpacing: 4,
               textTransform: 'uppercase',
-              display: 'flex',
             }}
           >
             davit-gevorgyan.com
