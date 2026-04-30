@@ -11,7 +11,7 @@ const jetbrains = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://davitgevorgyan.com'),
+  metadataBase: new URL('https://www.davit-gevorgyan.com'),
   title: 'Davit Gevorgyan — Strategy-Led AI Transformation',
   description:
     'Davit Gevorgyan helps companies build AI agent systems that are connected to strategy, not just to tasks. Stop deploying broken agents. Start building systems that think.',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://davitgevorgyan.com',
+    url: 'https://www.davit-gevorgyan.com',
     title: 'Davit Gevorgyan — Strategy-Led AI Transformation',
     description:
       'Most companies are deploying AI agents that automate tasks with no strategic alignment. Davit helps you build systems that actually move the needle.',

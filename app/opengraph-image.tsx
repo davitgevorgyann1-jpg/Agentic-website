@@ -126,7 +126,7 @@ export default async function OGImage() {
               textTransform: 'uppercase',
             }}
           >
-            davitgevorgyan.com
+            davit-gevorgyan.com
           </div>
         </div>
       </div>
