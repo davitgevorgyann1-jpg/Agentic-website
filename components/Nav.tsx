@@ -2,16 +2,20 @@
 
 import { useState } from 'react'
 
+// Order MUST match the section order in app/page.tsx.
+// If you add or remove a section there, also update SECTION_LABELS in FullpageScroll.tsx.
 const MENU_SECTIONS = [
-  { label: 'Home',          id: 'hero' },
-  { label: 'The Problem',   id: 'broken' },
-  { label: 'The Shift',     id: 'turning-point' },
-  { label: 'Strategy',      id: 'strategy' },
-  { label: 'Operations',    id: 'operations' },
-  { label: 'Your Agent',    id: 'agents' },
-  { label: 'Your Architect',id: 'architect' },
-  { label: 'Assessment',    id: 'assessment' },
-  { label: 'Contact',       id: 'cta' },
+  { label: 'Home',           id: 'hero' },
+  { label: 'The Problem',    id: 'broken' },
+  { label: 'The Shift',      id: 'turning-point' },
+  { label: 'Strategy',       id: 'strategy' },
+  { label: 'Operations',     id: 'operations' },
+  { label: 'Your Agent',     id: 'agents' },
+  { label: 'Your Architect', id: 'architect' },
+  { label: 'How I Work',     id: 'approach' },
+  { label: 'Engagement',     id: 'engagement' },
+  { label: 'Assessment',     id: 'assessment' },
+  { label: 'Contact',        id: 'cta' },
 ]
 
 export default function Nav() {
@@ -30,7 +34,7 @@ export default function Nav() {
       >
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <a href="#" className="text-sm font-bold text-white hover:text-white/80 transition-colors tracking-wide">
-            Strategy Architected
+            Davit Gevorgyan
           </a>
 
           {/* Hamburger — mobile only */}

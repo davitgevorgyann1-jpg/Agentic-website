@@ -151,11 +151,18 @@ function ScoreBar({ label, score }: { label: string; score: number }) {
   )
 }
 
+type Stage = 'questions' | 'email' | 'results'
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export default function Assessment() {
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [currentStep, setCurrentStep] = useState(0)
-  const [submitted, setSubmitted] = useState(false)
+  const [stage, setStage] = useState<Stage>('questions')
   const [direction, setDirection] = useState(1)
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
 
   const q = questions[currentStep]
   const totalAnswered = Object.keys(answers).length
@@ -166,6 +173,41 @@ export default function Assessment() {
   const aScore = categoryScore(answers, 'Alignment')
   const total = overallScore(answers)
   const scoreColor = getScoreColor(total)
+
+  const submitted = stage === 'results'
+
+  const submitLead = async (skipped: boolean) => {
+    if (!skipped) {
+      const trimmed = email.trim()
+      if (!EMAIL_RE.test(trimmed)) {
+        setEmailError('Enter a valid email address.')
+        return
+      }
+      setEmailError(null)
+      setSubmitting(true)
+      try {
+        await fetch('/api/assessment-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: trimmed,
+            scores: {
+              overall: total,
+              strategy: sScore,
+              operations: oScore,
+              alignment: aScore,
+            },
+            answers,
+          }),
+        })
+      } catch {
+        // Non-blocking — still show results even if the lead capture fails
+      } finally {
+        setSubmitting(false)
+      }
+    }
+    setStage('results')
+  }
 
   const goNext = () => {
     if (currentStep < questions.length - 1) {
@@ -220,7 +262,7 @@ export default function Assessment() {
 
         {/* Wizard */}
         <AnimatePresence mode="wait">
-          {!submitted ? (
+          {stage === 'questions' ? (
             <motion.div
               key="wizard"
               initial={{ opacity: 0 }}
@@ -344,7 +386,7 @@ export default function Assessment() {
                     </button>
                   ) : (
                     <button
-                      onClick={() => allAnswered && setSubmitted(true)}
+                      onClick={() => allAnswered && setStage('email')}
                       disabled={!allAnswered}
                       className="text-[11px] px-4 py-1.5 rounded transition-all"
                       style={{
@@ -357,6 +399,127 @@ export default function Assessment() {
                       See my results &rarr;
                     </button>
                   )}
+                </div>
+              </div>
+            </motion.div>
+          ) : stage === 'email' ? (
+            <motion.div
+              key="email"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="max-w-[600px] mx-auto"
+            >
+              <div
+                className="rounded-lg p-7"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}
+              >
+                {/* Tag */}
+                <div className="flex items-center gap-2 mb-5">
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: '50%',
+                      background: '#E2B97F',
+                      display: 'inline-block',
+                      boxShadow: '0 0 8px rgba(226,185,127,0.6)',
+                    }}
+                  />
+                  <span
+                    className="uppercase"
+                    style={{
+                      fontSize: 10,
+                      color: '#E2B97F',
+                      letterSpacing: '0.18em',
+                      fontFamily: 'var(--font-mono)',
+                    }}
+                  >
+                    ONE LAST THING
+                  </span>
+                </div>
+
+                <h3
+                  className="text-white mb-2"
+                  style={{ fontSize: 18, fontWeight: 600 }}
+                >
+                  Where should I send your full diagnosis?
+                </h3>
+                <p
+                  className="mb-6"
+                  style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}
+                >
+                  I&apos;ll send your score, a written breakdown, and the three
+                  specific actions tied to your weakest area. No spam, no list.
+                </p>
+
+                <input
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  placeholder="you@company.com"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    if (emailError) setEmailError(null)
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') submitLead(false)
+                  }}
+                  disabled={submitting}
+                  className="w-full px-4 py-3 rounded text-[13px] outline-none transition-colors"
+                  style={{
+                    background: 'rgba(255,255,255,0.04)',
+                    border: emailError
+                      ? '1px solid rgba(239,68,68,0.5)'
+                      : '1px solid rgba(255,255,255,0.12)',
+                    color: '#ffffff',
+                    fontFamily: 'var(--font-mono)',
+                  }}
+                />
+                {emailError && (
+                  <p
+                    className="mt-2"
+                    style={{ fontSize: 11, color: '#ef4444' }}
+                  >
+                    {emailError}
+                  </p>
+                )}
+
+                <div className="flex items-center justify-between mt-5">
+                  <button
+                    onClick={() => submitLead(true)}
+                    disabled={submitting}
+                    className="text-[11px] transition-colors"
+                    style={{
+                      color: 'rgba(255,255,255,0.35)',
+                      cursor: submitting ? 'not-allowed' : 'pointer',
+                      background: 'none',
+                      border: 'none',
+                      padding: 0,
+                    }}
+                  >
+                    Skip — just show my score
+                  </button>
+
+                  <button
+                    onClick={() => submitLead(false)}
+                    disabled={submitting}
+                    className="text-[11px] px-5 py-2 rounded transition-all"
+                    style={{
+                      background: submitting ? 'rgba(255,255,255,0.5)' : '#ffffff',
+                      color: '#0a0a0f',
+                      cursor: submitting ? 'wait' : 'pointer',
+                      fontWeight: 600,
+                      fontFamily: 'var(--font-mono)',
+                    }}
+                  >
+                    {submitting ? 'Sending…' : 'Send my report →'}
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -440,9 +603,11 @@ export default function Assessment() {
               {/* Retake */}
               <button
                 onClick={() => {
-                  setSubmitted(false)
+                  setStage('questions')
                   setAnswers({})
                   setCurrentStep(0)
+                  setEmail('')
+                  setEmailError(null)
                 }}
                 className="text-[11px] text-center transition-colors"
                 style={{ color: 'rgba(255,255,255,0.3)' }}

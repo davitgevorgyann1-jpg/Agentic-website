@@ -9,6 +9,8 @@ interface Props {
   children: React.ReactNode[]
 }
 
+// Order MUST match the order of children passed to FullpageScroll in app/page.tsx.
+// If you add or remove a section there, update this array (and Nav.tsx MENU_SECTIONS) too.
 const SECTION_LABELS = [
   'Home',
   'The Problem',
@@ -17,6 +19,8 @@ const SECTION_LABELS = [
   'Operations',
   'Your Agent',
   'Your Architect',
+  'How I Work',
+  'Engagement',
   'Assessment',
   'Contact',
 ]

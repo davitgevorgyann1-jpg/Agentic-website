@@ -176,7 +176,7 @@ export default function Footer() {
             color: 'rgba(255,255,255,0.25)',
           }}
         >
-          <span>&copy; 2026 Strategy Architected</span>
+          <span>&copy; 2026 Davit Gevorgyan</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <a
               href={`mailto:${EMAIL}`}

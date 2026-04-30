@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { openCalendly } from '@/lib/calendly'
 
 const GOLD = '#E2B97F'
+const LINKEDIN = 'https://www.linkedin.com/in/dav-gevorgyan/'
 
 const HIGHLIGHTS = [
   '10+ years product management',
@@ -135,12 +136,13 @@ export default function Architect() {
           ))}
         </motion.div>
 
-        {/* CTA */}
+        {/* CTA + LinkedIn */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex flex-wrap items-center gap-5"
         >
           <a
             href="#"
@@ -150,6 +152,35 @@ export default function Architect() {
             Book a Discovery Call
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+          <a
+            href={LINKEDIN}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 transition-colors"
+            style={{
+              fontSize: 12,
+              color: GOLD,
+              opacity: 0.85,
+              fontFamily: 'var(--font-mono)',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = '1' }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.85' }}
+          >
+            {/* LinkedIn glyph */}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43c-1.14 0-2.07-.93-2.07-2.07 0-1.14.93-2.07 2.07-2.07 1.14 0 2.07.93 2.07 2.07 0 1.14-.93 2.07-2.07 2.07zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+            </svg>
+            Full background on LinkedIn
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M3 11L11 3M11 3H5M11 3V9"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </a>
         </motion.div>
