@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { openCalendly } from '@/lib/calendly'
 
@@ -221,7 +221,7 @@ function ScoreBar({ label, score }: { label: string; score: number }) {
   )
 }
 
-type Stage = 'questions' | 'email' | 'results'
+type Stage = 'questions' | 'email' | 'sent' | 'results'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -254,49 +254,69 @@ export default function Assessment() {
   const submitted = stage === 'results'
 
   const submitLead = async (skipped: boolean) => {
-    if (!skipped) {
-      const trimmed = email.trim()
-      if (!EMAIL_RE.test(trimmed)) {
-        setFormError('Enter a valid email address.')
-        return
-      }
-      if (!role) {
-        setFormError('Pick the role that fits you best.')
-        return
-      }
-      if (!companyStage) {
-        setFormError('Pick your company stage.')
-        return
-      }
-      setFormError(null)
-      setSubmitting(true)
-      try {
-        await fetch('/api/assessment-lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: trimmed,
-            websiteUrl: websiteUrl.trim() || undefined,
-            role,
-            companyStage,
-            note: note.trim() || undefined,
-            scores: {
-              overall: total,
-              strategy: sScore,
-              operations: oScore,
-              alignment: aScore,
-            },
-            answers,
-          }),
-        })
-      } catch {
-        // Non-blocking — still show results even if the lead capture fails
-      } finally {
-        setSubmitting(false)
-      }
+    // Skip path: no submission, go straight to results
+    if (skipped) {
+      setStage('results')
+      return
     }
-    setStage('results')
+
+    // Validate
+    const trimmed = email.trim()
+    if (!EMAIL_RE.test(trimmed)) {
+      setFormError('Enter a valid email address.')
+      return
+    }
+    if (!role) {
+      setFormError('Pick the role that fits you best.')
+      return
+    }
+    if (!companyStage) {
+      setFormError('Pick your company stage.')
+      return
+    }
+    setFormError(null)
+    setSubmitting(true)
+
+    let ok = false
+    try {
+      const res = await fetch('/api/assessment-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: trimmed,
+          websiteUrl: websiteUrl.trim() || undefined,
+          role,
+          companyStage,
+          note: note.trim() || undefined,
+          scores: {
+            overall: total,
+            strategy: sScore,
+            operations: oScore,
+            alignment: aScore,
+          },
+          answers,
+        }),
+      })
+      ok = res.ok
+    } catch {
+      ok = false
+    } finally {
+      setSubmitting(false)
+    }
+
+    if (ok) {
+      setStage('sent')
+    } else {
+      setFormError('Could not send right now. Try again, or skip to see your score.')
+    }
   }
+
+  // Auto-advance from confirmation to results after a short pause
+  useEffect(() => {
+    if (stage !== 'sent') return
+    const t = setTimeout(() => setStage('results'), 2400)
+    return () => clearTimeout(t)
+  }, [stage])
 
   const goNext = () => {
     if (currentStep < questions.length - 1) {
@@ -669,6 +689,115 @@ export default function Assessment() {
                     {submitting ? 'Sending…' : 'Send to Davit →'}
                   </button>
                 </div>
+              </div>
+            </motion.div>
+          ) : stage === 'sent' ? (
+            <motion.div
+              key="sent"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              className="max-w-[640px] mx-auto"
+            >
+              <div
+                className="rounded-lg flex flex-col items-center text-center"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(226,185,127,0.25)',
+                  boxShadow: '0 0 40px rgba(226,185,127,0.06)',
+                  padding: '48px 32px',
+                }}
+              >
+                {/* Animated checkmark — circle draws first, then check strokes in */}
+                <motion.svg
+                  width="72"
+                  height="72"
+                  viewBox="0 0 64 64"
+                  fill="none"
+                  className="mb-6"
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <motion.circle
+                    cx="32"
+                    cy="32"
+                    r="30"
+                    stroke="#E2B97F"
+                    strokeWidth="1.5"
+                    fill="none"
+                    strokeLinecap="round"
+                    variants={{
+                      hidden: { pathLength: 0, opacity: 0 },
+                      visible: {
+                        pathLength: 1,
+                        opacity: 0.7,
+                        transition: { duration: 0.6, ease: 'easeOut' },
+                      },
+                    }}
+                  />
+                  <motion.path
+                    d="M20 33 L29 42 L45 24"
+                    stroke="#E2B97F"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    variants={{
+                      hidden: { pathLength: 0 },
+                      visible: {
+                        pathLength: 1,
+                        transition: { delay: 0.45, duration: 0.4, ease: 'easeOut' },
+                      },
+                    }}
+                  />
+                </motion.svg>
+
+                <motion.h3
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.3 }}
+                  className="text-white mb-3"
+                  style={{ fontSize: 22, fontWeight: 600, fontFamily: 'var(--font-mono)' }}
+                >
+                  Got it.
+                </motion.h3>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.85, duration: 0.3 }}
+                  className="mb-7"
+                  style={{
+                    fontSize: 14,
+                    color: 'rgba(255,255,255,0.6)',
+                    lineHeight: 1.65,
+                    maxWidth: 420,
+                  }}
+                >
+                  Your submission is in. I&apos;ll read it and write back personally within a few days.
+                </motion.p>
+
+                <motion.button
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.0, duration: 0.3 }}
+                  onClick={() => setStage('results')}
+                  className="text-[11px] transition-colors"
+                  style={{
+                    color: 'rgba(255,255,255,0.5)',
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-mono)',
+                    letterSpacing: '0.05em',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.85)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
+                >
+                  Show my score →
+                </motion.button>
               </div>
             </motion.div>
           ) : (
