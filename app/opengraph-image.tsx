@@ -80,8 +80,8 @@ export default async function OGImage() {
             flexDirection: 'column',
           }}
         >
-          <span>I don&apos;t ask what to automate.</span>
-          <span>I ask why.</span>
+          <span>Strategy first.</span>
+          <span>Then build the agents.</span>
         </div>
 
         {/* Bottom row: >_ prompt left, byline right */}
