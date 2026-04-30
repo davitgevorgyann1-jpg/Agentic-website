@@ -17,17 +17,17 @@ const PHASES: Phase[] = [
   {
     number: '01',
     title: 'Strategic Audit',
-    subtitle: 'Read what you said. Find out what you actually mean.',
-    body: 'Strategy docs. OKRs. Board decks. Then interviews where leadership says what they actually believe — usually not what is written down.',
-    outcome: 'A sharper version of your real priorities.',
+    subtitle: 'Find the strategy you actually have — not the one in the deck.',
+    body: 'Most leadership teams have 30 "priorities" and treat all of them as equally important. I read your strategy docs, OKRs, and board decks — then I interview your leadership one-on-one and find out what they actually believe. The gap between those two is where the real work lives.',
+    outcome: 'Three to five priorities. Stack-ranked. Committed to in writing.',
     time: '1–2 weeks',
   },
   {
     number: '02',
     title: 'Alignment Design',
-    subtitle: 'Map every process, every dashboard, every agent against the strategy.',
-    body: 'Every existing automation, report, and decision-making layer gets tested against Phase 01. Most fail. We identify what to kill, keep, and what should exist but does not.',
-    outcome: 'A map of misalignments — and the design that fixes them.',
+    subtitle: 'Most companies have strategy. Most have execution. Almost none have the layer that connects them.',
+    body: 'With your priorities locked in, I design what your operations should look like to enforce them — which strategic agents you need, which operational agents you need. If you already have automations running, those get tested against the strategy too — most fail. The result, either way: a blueprint where every piece traces back to a priority.',
+    outcome: 'A blueprint: what should exist, what should be kept, what should be killed. Plus the system that prevents future drift.',
     time: '2–3 weeks',
   },
   {
