@@ -8,6 +8,10 @@ export const contentType = 'image/png'
 const GOLD = '#E2B97F'
 const BG = '#0a0a0f'
 
+// IMPORTANT: do not set `fontFamily: 'monospace'` (or any font we have not
+// explicitly loaded). Satori — the renderer behind ImageResponse — only
+// ships with Inter by default. Referencing an unavailable font silently
+// produces a 0-byte PNG. Stick to Inter weights or fetch a font.
 export default async function OGImage() {
   return new ImageResponse(
     (
@@ -19,21 +23,9 @@ export default async function OGImage() {
           display: 'flex',
           flexDirection: 'column',
           padding: '72px 80px',
-          fontFamily: 'monospace',
           position: 'relative',
         }}
       >
-        {/* Subtle grid overlay (faint) */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
-
         {/* Top tag row */}
         <div
           style={{
@@ -49,30 +41,29 @@ export default async function OGImage() {
               height: 12,
               borderRadius: '50%',
               background: GOLD,
-              boxShadow: `0 0 16px ${GOLD}`,
             }}
           />
           <div
             style={{
-              fontSize: 20,
+              fontSize: 22,
               color: GOLD,
               textTransform: 'uppercase',
-              letterSpacing: '0.18em',
+              letterSpacing: 6,
+              fontWeight: 600,
             }}
           >
-            STRATEGY-LED AI TRANSFORMATION
+            Strategy-Led AI Transformation
           </div>
         </div>
 
-        {/* Main name — large mono */}
+        {/* Main name */}
         <div
           style={{
             fontSize: 96,
-            fontWeight: 700,
+            fontWeight: 800,
             color: '#ffffff',
             lineHeight: 1.05,
             marginBottom: 32,
-            letterSpacing: '-0.01em',
             display: 'flex',
           }}
         >
@@ -82,10 +73,9 @@ export default async function OGImage() {
         {/* Subhead — the thesis */}
         <div
           style={{
-            fontSize: 34,
-            color: 'rgba(255,255,255,0.55)',
+            fontSize: 36,
+            color: 'rgba(255,255,255,0.6)',
             lineHeight: 1.35,
-            maxWidth: 1000,
             display: 'flex',
             flexDirection: 'column',
           }}
@@ -108,22 +98,21 @@ export default async function OGImage() {
         >
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              fontSize: 44,
+              fontSize: 48,
               color: GOLD,
-              fontWeight: 700,
+              fontWeight: 800,
+              display: 'flex',
             }}
           >
-            {`>_`}
+            {'>_'}
           </div>
           <div
             style={{
-              fontSize: 18,
-              color: 'rgba(255,255,255,0.4)',
-              letterSpacing: '0.1em',
+              fontSize: 20,
+              color: 'rgba(255,255,255,0.45)',
+              letterSpacing: 4,
               textTransform: 'uppercase',
+              display: 'flex',
             }}
           >
             davit-gevorgyan.com
