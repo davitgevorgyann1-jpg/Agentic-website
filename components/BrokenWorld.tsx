@@ -221,19 +221,10 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
               display: 'inline-block',
             }}
           />
+          <span className="text-[16px] font-bold text-white">{agent.name}</span>
           <span
-            style={{
-              fontSize: 13,
-              fontWeight: 500,
-              color: 'rgba(255,255,255,0.55)',
-              letterSpacing: '0.01em',
-            }}
-          >
-            {agent.name}
-          </span>
-          <span
-            className="text-[10px] uppercase tracking-[0.18em] px-2 py-0.5 rounded-full border"
-            style={{ color: agent.statusColor, borderColor: `${agent.statusColor}55`, opacity: 0.85 }}
+            className="text-[11px] uppercase tracking-[0.15em] px-2 py-0.5 rounded-full border"
+            style={{ color: agent.statusColor, borderColor: `${agent.statusColor}66` }}
           >
             {agent.status}
           </span>
@@ -246,17 +237,21 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote is the hero of the row — large, italic, near-full white. The
-            name + status above act as supporting metadata. */}
+        {/* Quote: rendered as a bordered callout in the section accent color —
+            same visual language the site uses on the expanded dialogue, but
+            slightly more prominent (full-opacity border, brighter text). The
+            border in section color marks it as "agent speech"; the typography
+            stays modest so it does not fight the section's h2 above. */}
         <p
-          className="italic"
           style={{
-            fontSize: 22,
+            fontSize: 16,
             fontWeight: 500,
-            color: 'rgba(255,255,255,0.92)',
-            lineHeight: 1.4,
-            marginTop: 12,
-            marginBottom: 2,
+            color: 'rgba(255,255,255,0.88)',
+            lineHeight: 1.55,
+            marginTop: 14,
+            marginBottom: 4,
+            paddingLeft: 14,
+            borderLeft: `2px solid ${agent.statusColor}`,
           }}
         >
           {agent.quote}
