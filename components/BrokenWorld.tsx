@@ -237,18 +237,16 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote: a true pastel of the section's amber. Built by taking the
-            section's base amber #D97706 (hsl 30, 95%, 44%) and shifting it
-            into pastel territory — keep the hue at ~30 (orange), drop
-            saturation to ~55%, raise lightness to ~75%. Lands at #E2B69A,
-            a soft peach. Reads as clearly orange-family (no yellow drift),
-            distinct from the pure-white agent name, calm enough to sit in
-            the muted register the original faded-white treatment occupied. */}
+        {/* Quote: an earthen pastel of the section's amber. Same muted
+            register as before but at lower lightness — hue stays at ~30
+            (orange, matches base amber #D97706), saturation 60%, lightness
+            60%. Lands at #D49A5C: less peachy, more grounded amber-tan.
+            Keeps the "pastel state" (no vivid saturation), just darker. */}
         <p
           style={{
             fontSize: 16,
             fontWeight: 500,
-            color: '#E2B69A',
+            color: '#D49A5C',
             lineHeight: 1.55,
             marginTop: 14,
             marginBottom: 4,
