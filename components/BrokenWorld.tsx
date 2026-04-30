@@ -237,16 +237,18 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote: rendered as a bordered callout in the section accent color —
-            same visual language the site uses on the expanded dialogue, but
-            slightly more prominent (full-opacity border, brighter text). The
-            border in section color marks it as "agent speech"; the typography
-            stays modest so it does not fight the section's h2 above. */}
+        {/* Quote: bordered callout in the section accent color (matching the
+            site's existing dialogue treatment, just at full-opacity border).
+            Text is amber-bright (#FCD34D) — a different hue from the white
+            agent name above, so the row reads as three distinct hierarchy
+            steps: white identity, amber-bright voice, base-amber metadata.
+            Yellow-gold body text also reads as "warning speech," reinforcing
+            the broken framing. */}
         <p
           style={{
             fontSize: 16,
             fontWeight: 500,
-            color: 'rgba(255,255,255,0.88)',
+            color: '#FCD34D',
             lineHeight: 1.55,
             marginTop: 14,
             marginBottom: 4,
