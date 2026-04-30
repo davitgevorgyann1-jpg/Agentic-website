@@ -48,48 +48,87 @@ const PHASES: Phase[] = [
   },
 ]
 
-function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
+// Baseline opacities for the trail dots — fades down toward the next phase
+const TRAIL_DOTS = [0.7, 0.55, 0.45, 0.35, 0.28, 0.22, 0.16, 0.1]
+
+function PhaseRow({ phase, index, isLast }: { phase: Phase; index: number; isLast: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -10 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
-      className="flex items-start gap-4"
+      className="flex items-stretch gap-6"
     >
-      {/* Numbered circle */}
-      <div
-        className="flex-shrink-0 flex items-center justify-center"
-        style={{
-          width: 36,
-          height: 36,
-          borderRadius: '50%',
-          background: '#0a0a0f',
-          border: `1.5px solid ${GOLD}`,
-          boxShadow: `0 0 12px ${GOLD}33`,
-          marginTop: 2,
-        }}
-      >
-        <span
+      {/* Left column: numbered circle + connecting dot trail */}
+      <div className="flex-shrink-0 flex flex-col items-center" style={{ width: 44 }}>
+        {/* Numbered circle */}
+        <div
+          className="flex-shrink-0 flex items-center justify-center"
           style={{
-            fontSize: 12,
-            fontWeight: 700,
-            color: GOLD,
-            fontFamily: 'var(--font-mono)',
-            letterSpacing: '0.05em',
+            width: 44,
+            height: 44,
+            borderRadius: '50%',
+            background: '#0a0a0f',
+            border: `1.5px solid ${GOLD}`,
+            boxShadow: `0 0 14px ${GOLD}33`,
           }}
         >
-          {phase.number}
-        </span>
-      </div>
-
-      {/* Content */}
-      <div className="flex-1">
-        {/* Title row: name + time */}
-        <div className="flex items-baseline gap-3 flex-wrap mb-1">
           <span
             style={{
-              fontSize: 16,
+              fontSize: 14,
+              fontWeight: 700,
+              color: GOLD,
+              fontFamily: 'var(--font-mono)',
+              letterSpacing: '0.05em',
+            }}
+          >
+            {phase.number}
+          </span>
+        </div>
+
+        {/* Vertical dot trail to next phase — distributes evenly across available column height */}
+        {!isLast && (
+          <div
+            className="flex flex-col items-center"
+            style={{
+              flex: 1,
+              paddingTop: 10,
+              paddingBottom: 10,
+              justifyContent: 'space-evenly',
+            }}
+          >
+            {TRAIL_DOTS.map((baselineOpacity, i) => (
+              <motion.div
+                key={i}
+                animate={{
+                  opacity: [baselineOpacity * 0.6, baselineOpacity, baselineOpacity * 0.6],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: i * 0.15,
+                }}
+                style={{
+                  width: 3,
+                  height: 3,
+                  borderRadius: '50%',
+                  background: GOLD,
+                }}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Right column: phase content */}
+      <div className="flex-1 pb-2" style={{ paddingTop: 4 }}>
+        {/* Title row: name + duration inline */}
+        <div className="flex items-baseline gap-3 flex-wrap mb-2">
+          <span
+            style={{
+              fontSize: 18,
               fontWeight: 700,
               color: '#ffffff',
               fontFamily: 'var(--font-mono)',
@@ -100,8 +139,8 @@ function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
           <span
             className="uppercase"
             style={{
-              fontSize: 10,
-              color: 'rgba(255,255,255,0.35)',
+              fontSize: 11,
+              color: 'rgba(255,255,255,0.4)',
               fontFamily: 'var(--font-mono)',
               letterSpacing: '0.15em',
             }}
@@ -112,31 +151,31 @@ function PhaseRow({ phase, index }: { phase: Phase; index: number }) {
 
         {/* Subtitle */}
         <p
-          className="italic mb-2"
-          style={{ fontSize: 12, color: GOLD, opacity: 0.75, lineHeight: 1.5 }}
+          className="italic mb-3"
+          style={{ fontSize: 14, color: GOLD, opacity: 0.8, lineHeight: 1.5 }}
         >
           {phase.subtitle}
         </p>
 
         {/* Body */}
         <p
-          className="mb-2"
-          style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6 }}
+          className="mb-3"
+          style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', lineHeight: 1.65 }}
         >
           {phase.body}
         </p>
 
         {/* Outcome */}
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>
+        <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.55 }}>
           <span
             className="uppercase"
             style={{
-              fontSize: 9,
+              fontSize: 10,
               color: GOLD,
               opacity: 0.85,
-              letterSpacing: '0.18em',
+              letterSpacing: '0.2em',
               fontFamily: 'var(--font-mono)',
-              marginRight: 8,
+              marginRight: 10,
             }}
           >
             OUTCOME
@@ -167,8 +206,8 @@ export default function HowIWork() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          paddingTop: 56,
-          paddingBottom: 56,
+          paddingTop: 64,
+          paddingBottom: 64,
         }}
       >
         {/* Section header */}
@@ -177,9 +216,9 @@ export default function HowIWork() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-8"
+          className="mb-10"
         >
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-5">
             <span
               className="animate-pulse-steady"
               style={{
@@ -191,7 +230,7 @@ export default function HowIWork() {
                 boxShadow: `0 0 8px ${GOLD}99`,
               }}
             />
-            <span className="text-[11px] uppercase tracking-[0.18em]" style={{ color: GOLD }}>
+            <span className="text-[12px] uppercase tracking-[0.15em]" style={{ color: GOLD }}>
               THE APPROACH
             </span>
             <div
@@ -199,24 +238,26 @@ export default function HowIWork() {
               style={{ background: `linear-gradient(to right, ${GOLD}66, transparent)` }}
             />
           </div>
-          <h2 className="text-[clamp(26px,4vw,38px)] font-bold text-white mb-2">
+          <h2 className="text-[clamp(32px,5vw,48px)] font-bold text-white mb-3">
             Top down. Always.
           </h2>
           <p
-            className="text-[14px] max-w-[760px]"
+            className="text-[18px] max-w-[820px]"
             style={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.5 }}
           >
             Most consultants start with what to automate. I start with what your company is actually trying to do.
           </p>
         </motion.div>
 
-        {/* Phases — flex distribute */}
-        <div
-          className="flex flex-col gap-6"
-          style={{ flex: '0 1 auto' }}
-        >
+        {/* Phases — small inter-row gap so the dot trails feel continuous */}
+        <div className="flex flex-col" style={{ gap: 4 }}>
           {PHASES.map((phase, i) => (
-            <PhaseRow key={phase.number} phase={phase} index={i} />
+            <PhaseRow
+              key={phase.number}
+              phase={phase}
+              index={i}
+              isLast={i === PHASES.length - 1}
+            />
           ))}
         </div>
       </div>
