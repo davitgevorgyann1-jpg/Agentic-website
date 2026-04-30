@@ -311,10 +311,13 @@ export default function Assessment() {
     }
   }
 
-  // Auto-advance from confirmation to results after a short pause
+  // Auto-advance from confirmation to results after a pause long enough to read the
+  // full message comfortably. Animation completes around 1.3s; this leaves ~4s of
+  // dwell time before the page transitions on its own. The "Show my score" button
+  // is still available to skip ahead.
   useEffect(() => {
     if (stage !== 'sent') return
-    const t = setTimeout(() => setStage('results'), 2400)
+    const t = setTimeout(() => setStage('results'), 5500)
     return () => clearTimeout(t)
   }, [stage])
 
