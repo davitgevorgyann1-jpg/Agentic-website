@@ -10,7 +10,8 @@ interface Props {
 }
 
 // Order MUST match the order of children passed to FullpageScroll in app/page.tsx.
-// If you add or remove a section there, update this array (and Nav.tsx MENU_SECTIONS) too.
+// If you add or remove a section there, update BOTH arrays (and Nav.tsx MENU_SECTIONS,
+// and SECTION_PATHS in next.config.js).
 const SECTION_LABELS = [
   'Home',
   'The Problem',
@@ -24,6 +25,36 @@ const SECTION_LABELS = [
   'Assessment',
   'Contact',
 ]
+
+// Section ids correspond 1-to-1 with the <section id="..."> values rendered by
+// each child component in app/page.tsx, in the same order as SECTION_LABELS.
+// 'hero' is special: it maps to "/" rather than "/hero".
+const SECTION_IDS = [
+  'hero',
+  'broken',
+  'turning-point',
+  'strategy',
+  'operations',
+  'agents',
+  'architect',
+  'approach',
+  'engagement',
+  'assessment',
+  'cta',
+]
+
+function pathToIndex(pathname: string): number {
+  const trimmed = pathname.replace(/^\/+|\/+$/g, '')
+  if (!trimmed) return 0 // root → hero
+  const idx = SECTION_IDS.indexOf(trimmed)
+  return idx >= 0 ? idx : 0
+}
+
+function indexToPath(index: number): string {
+  const id = SECTION_IDS[index]
+  if (!id || id === 'hero') return '/'
+  return `/${id}`
+}
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
@@ -365,28 +396,37 @@ export default function FullpageScroll({ children }: Props) {
     }
   }, [current, goTo, isMobile])
 
-  // Desktop: sync URL hash to current section
+  // Desktop: sync URL path to current section (no hash — clean paths like "/strategy",
+  // and "/" for the hero). next.config.js rewrites map these paths back to the home page
+  // so refreshes and direct shares still work.
   useEffect(() => {
     if (isMobile) return
-    const section = sectionRefs.current[current]
-    const id = section?.querySelector('section')?.id
-    if (id) window.history.replaceState(null, '', `#${id}`)
+    const desired = indexToPath(current)
+    if (window.location.pathname !== desired) {
+      window.history.replaceState(null, '', desired)
+    }
   }, [current, isMobile])
 
-  // Desktop: navigate on hash change
+  // Desktop: respond to browser back/forward (popstate fires on those, not on
+  // replaceState calls we make ourselves)
   useEffect(() => {
     if (isMobile) return
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1)
-      if (!hash) return
-      const idx = sectionRefs.current.findIndex(
-        el => el?.querySelector('section')?.id === hash
-      )
-      if (idx >= 0) goTo(idx)
+    const handlePopState = () => {
+      const idx = pathToIndex(window.location.pathname)
+      goTo(idx)
     }
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [goTo, isMobile])
+
+  // Desktop: on initial mount, if the URL points to a non-hero section, jump there
+  useEffect(() => {
+    if (isMobile) return
+    const idx = pathToIndex(window.location.pathname)
+    if (idx > 0) goTo(idx)
+    // Run only once on mount — no deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Desktop: fp:goto custom event
   useEffect(() => {
