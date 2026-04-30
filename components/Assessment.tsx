@@ -130,6 +130,76 @@ function getVerdict(score: number): string {
   return "Strong strategic alignment. You're well-positioned for targeted AI transformation."
 }
 
+function FieldLabel({ children, optional }: { children: React.ReactNode; optional?: boolean }) {
+  return (
+    <div className="flex items-baseline gap-2 mb-1.5">
+      <span
+        className="uppercase"
+        style={{
+          fontSize: 9,
+          color: 'rgba(255,255,255,0.5)',
+          letterSpacing: '0.18em',
+          fontFamily: 'var(--font-mono)',
+        }}
+      >
+        {children}
+      </span>
+      {optional && (
+        <span
+          className="uppercase"
+          style={{
+            fontSize: 9,
+            color: 'rgba(255,255,255,0.25)',
+            letterSpacing: '0.15em',
+            fontFamily: 'var(--font-mono)',
+          }}
+        >
+          — optional
+        </span>
+      )}
+    </div>
+  )
+}
+
+function PillGroup({
+  options,
+  value,
+  onChange,
+  disabled,
+}: {
+  options: string[]
+  value: string | null
+  onChange: (v: string) => void
+  disabled?: boolean
+}) {
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {options.map((opt) => {
+        const active = value === opt
+        return (
+          <button
+            key={opt}
+            type="button"
+            onClick={() => !disabled && onChange(opt)}
+            disabled={disabled}
+            className="text-[11px] rounded transition-all"
+            style={{
+              padding: '6px 12px',
+              background: active ? 'rgba(226,185,127,0.12)' : 'rgba(255,255,255,0.02)',
+              border: `1px solid ${active ? 'rgba(226,185,127,0.55)' : 'rgba(255,255,255,0.10)'}`,
+              color: active ? '#E2B97F' : 'rgba(255,255,255,0.55)',
+              fontFamily: 'var(--font-mono)',
+              cursor: disabled ? 'not-allowed' : 'pointer',
+            }}
+          >
+            {opt}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
 function ScoreBar({ label, score }: { label: string; score: number }) {
   const color = getScoreColor(score)
   return (
@@ -155,13 +225,19 @@ type Stage = 'questions' | 'email' | 'results'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+const ROLE_OPTIONS = ['Founder / CEO', 'Operations', 'Product', 'Engineering', 'Other']
+const STAGE_OPTIONS = ['Pre-revenue', 'Seed–Series A', 'Series B+', 'Established', 'Other']
+
 export default function Assessment() {
   const [answers, setAnswers] = useState<Record<number, number>>({})
   const [currentStep, setCurrentStep] = useState(0)
   const [stage, setStage] = useState<Stage>('questions')
   const [direction, setDirection] = useState(1)
   const [email, setEmail] = useState('')
-  const [emailError, setEmailError] = useState<string | null>(null)
+  const [role, setRole] = useState<string | null>(null)
+  const [companyStage, setCompanyStage] = useState<string | null>(null)
+  const [note, setNote] = useState('')
+  const [formError, setFormError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
   const q = questions[currentStep]
@@ -180,10 +256,18 @@ export default function Assessment() {
     if (!skipped) {
       const trimmed = email.trim()
       if (!EMAIL_RE.test(trimmed)) {
-        setEmailError('Enter a valid email address.')
+        setFormError('Enter a valid email address.')
         return
       }
-      setEmailError(null)
+      if (!role) {
+        setFormError('Pick the role that fits you best.')
+        return
+      }
+      if (!companyStage) {
+        setFormError('Pick your company stage.')
+        return
+      }
+      setFormError(null)
       setSubmitting(true)
       try {
         await fetch('/api/assessment-lead', {
@@ -191,6 +275,9 @@ export default function Assessment() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email: trimmed,
+            role,
+            companyStage,
+            note: note.trim() || undefined,
             scores: {
               overall: total,
               strategy: sScore,
@@ -409,7 +496,7 @@ export default function Assessment() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
-              className="max-w-[600px] mx-auto"
+              className="max-w-[640px] mx-auto"
             >
               <div
                 className="rounded-lg p-7"
@@ -447,16 +534,17 @@ export default function Assessment() {
                   className="text-white mb-2"
                   style={{ fontSize: 18, fontWeight: 600 }}
                 >
-                  Where should I send your full diagnosis?
+                  Want me to take a closer look at this?
                 </h3>
                 <p
-                  className="mb-6"
+                  className="mb-5"
                   style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}
                 >
-                  I&apos;ll send your score, a written breakdown, and the three
-                  specific actions tied to your weakest area. No spam, no list.
+                  I read every assessment that comes in. Give me 30 seconds of context and I&apos;ll write back personally with 2–3 things I&apos;d focus on first.
                 </p>
 
+                {/* Email */}
+                <FieldLabel>Email</FieldLabel>
                 <input
                   type="email"
                   inputMode="email"
@@ -465,31 +553,70 @@ export default function Assessment() {
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value)
-                    if (emailError) setEmailError(null)
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') submitLead(false)
+                    if (formError) setFormError(null)
                   }}
                   disabled={submitting}
-                  className="w-full px-4 py-3 rounded text-[13px] outline-none transition-colors"
+                  className="w-full px-4 py-2.5 rounded text-[13px] outline-none transition-colors mb-4"
                   style={{
                     background: 'rgba(255,255,255,0.04)',
-                    border: emailError
-                      ? '1px solid rgba(239,68,68,0.5)'
-                      : '1px solid rgba(255,255,255,0.12)',
+                    border: '1px solid rgba(255,255,255,0.12)',
                     color: '#ffffff',
                     fontFamily: 'var(--font-mono)',
                   }}
                 />
-                {emailError && (
+
+                {/* Role */}
+                <FieldLabel>Your role</FieldLabel>
+                <PillGroup
+                  options={ROLE_OPTIONS}
+                  value={role}
+                  onChange={(v) => { setRole(v); if (formError) setFormError(null) }}
+                  disabled={submitting}
+                />
+
+                {/* Company stage */}
+                <div className="mt-4">
+                  <FieldLabel>Company stage</FieldLabel>
+                  <PillGroup
+                    options={STAGE_OPTIONS}
+                    value={companyStage}
+                    onChange={(v) => { setCompanyStage(v); if (formError) setFormError(null) }}
+                    disabled={submitting}
+                  />
+                </div>
+
+                {/* Optional note */}
+                <div className="mt-4">
+                  <FieldLabel optional>Anything specific you&apos;d like me to look at?</FieldLabel>
+                  <textarea
+                    placeholder="A line or two — completely optional."
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    disabled={submitting}
+                    rows={2}
+                    maxLength={500}
+                    className="w-full px-4 py-2.5 rounded text-[13px] outline-none transition-colors resize-none"
+                    style={{
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                      color: '#ffffff',
+                      fontFamily: 'var(--font-mono)',
+                      lineHeight: 1.5,
+                    }}
+                  />
+                </div>
+
+                {/* Error */}
+                {formError && (
                   <p
-                    className="mt-2"
+                    className="mt-3"
                     style={{ fontSize: 11, color: '#ef4444' }}
                   >
-                    {emailError}
+                    {formError}
                   </p>
                 )}
 
+                {/* Buttons */}
                 <div className="flex items-center justify-between mt-5">
                   <button
                     onClick={() => submitLead(true)}
@@ -518,7 +645,7 @@ export default function Assessment() {
                       fontFamily: 'var(--font-mono)',
                     }}
                   >
-                    {submitting ? 'Sending…' : 'Send my report →'}
+                    {submitting ? 'Sending…' : 'Send to Davit →'}
                   </button>
                 </div>
               </div>
@@ -607,7 +734,10 @@ export default function Assessment() {
                   setAnswers({})
                   setCurrentStep(0)
                   setEmail('')
-                  setEmailError(null)
+                  setRole(null)
+                  setCompanyStage(null)
+                  setNote('')
+                  setFormError(null)
                 }}
                 className="text-[11px] text-center transition-colors"
                 style={{ color: 'rgba(255,255,255,0.3)' }}
