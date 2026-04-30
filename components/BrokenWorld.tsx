@@ -237,17 +237,18 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote: same muted register as the original faded-white treatment,
-            but tinted with the section's accent. Amber-bright at 65% opacity
-            reads as "soft amber" — clearly the section's hue, distinct from
-            the white agent name, but quiet enough not to shout. The 2px solid
-            border at full statusColor on the left carries the visual signature;
-            the text itself sits in a calmer register. */}
+        {/* Quote: a true pastel of the section's amber. Built by taking the
+            section's base amber #D97706 (hsl 30, 95%, 44%) and shifting it
+            into pastel territory — keep the hue at ~30 (orange), drop
+            saturation to ~55%, raise lightness to ~75%. Lands at #E2B69A,
+            a soft peach. Reads as clearly orange-family (no yellow drift),
+            distinct from the pure-white agent name, calm enough to sit in
+            the muted register the original faded-white treatment occupied. */}
         <p
           style={{
             fontSize: 16,
             fontWeight: 500,
-            color: 'rgba(252, 211, 77, 0.65)',
+            color: '#E2B69A',
             lineHeight: 1.55,
             marginTop: 14,
             marginBottom: 4,
