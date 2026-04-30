@@ -3,26 +3,26 @@ import { NextResponse } from 'next/server'
 /**
  * /api/assessment-lead
  *
- * Receives a completed assessment + lead context and stores it.
- * Currently logs to the Vercel function log (visible in the Vercel dashboard).
+ * Receives a completed assessment + lead context and:
+ *   1. Logs the lead (always — visible in Vercel function logs)
+ *   2. If RESEND_API_KEY env var is set, also emails NOTIFICATION_EMAIL
+ *      with the lead details. Reply-to is the lead's email, so hitting
+ *      Reply in the inbox sends straight to them.
  *
- * To enable real email notifications:
- *   1. Add an env var (e.g. RESEND_API_KEY) in Vercel.
- *   2. Replace the `console.log` block below with the email-send call.
+ * SETUP (one-time, in Vercel dashboard → project → Environment Variables):
+ *   RESEND_API_KEY      = (from resend.com — free tier, 100 emails/mo)
+ *   NOTIFICATION_EMAIL  = davit.gevorgyann1@gmail.com
  *
- * Example with Resend (npm i resend):
- *   import { Resend } from 'resend'
- *   const resend = new Resend(process.env.RESEND_API_KEY)
- *   await resend.emails.send({
- *     from: 'leads@davitgevorgyan.com',
- *     to: 'davit.gevorgyann1@gmail.com',
- *     subject: `New assessment lead — ${email} (${role}, ${companyStage}, ${scores.overall}/100)`,
- *     text: JSON.stringify({ email, role, companyStage, note, scores, answers }, null, 2),
- *   })
+ * The Resend "onboarding@resend.dev" sender works without domain
+ * verification. To send from leads@davitgevorgyan.com later, verify the
+ * domain in Resend (DNS records) and update FROM_ADDRESS below.
  */
+
+const FROM_ADDRESS = 'Davit Gevorgyan Leads <onboarding@resend.dev>'
 
 interface AssessmentLeadPayload {
   email: string
+  websiteUrl?: string
   role: string
   companyStage: string
   note?: string
@@ -37,10 +37,70 @@ interface AssessmentLeadPayload {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+function formatLeadEmailBody(p: AssessmentLeadPayload): string {
+  const pad = (n: number) => `${n}%`.padEnd(5)
+  const lines = [
+    `Score: ${p.scores.overall}/100`,
+    ``,
+    `  Strategy:    ${pad(p.scores.strategy)}`,
+    `  Operations:  ${pad(p.scores.operations)}`,
+    `  Alignment:   ${pad(p.scores.alignment)}`,
+    ``,
+    `─────────────────────────────────────────────`,
+    ``,
+    `Email:    ${p.email}`,
+    `Website:  ${p.websiteUrl || '(not provided)'}`,
+    `Role:     ${p.role}`,
+    `Stage:    ${p.companyStage}`,
+    ``,
+    `Note from them:`,
+    p.note ? p.note : '(no note)',
+    ``,
+    `─────────────────────────────────────────────`,
+    ``,
+    `Reply directly to this email to respond — it goes straight to them.`,
+  ]
+  return lines.join('\n')
+}
+
+async function sendNotification(payload: AssessmentLeadPayload): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY
+  const recipient = process.env.NOTIFICATION_EMAIL
+
+  if (!apiKey || !recipient) {
+    // Graceful degradation: route still succeeds, just no email sent.
+    return
+  }
+
+  const subject = `Assessment lead — ${payload.email} (${payload.scores.overall}/100, ${payload.role})`
+  const text = formatLeadEmailBody(payload)
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: FROM_ADDRESS,
+      to: recipient,
+      reply_to: payload.email,
+      subject,
+      text,
+    }),
+  })
+
+  if (!res.ok) {
+    const errBody = await res.text().catch(() => '(no body)')
+    console.error('[assessment-lead] resend error:', res.status, errBody)
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Partial<AssessmentLeadPayload>
     const email = (body.email ?? '').trim()
+    const websiteUrl = (body.websiteUrl ?? '').trim()
     const role = (body.role ?? '').trim()
     const companyStage = (body.companyStage ?? '').trim()
     const note = (body.note ?? '').trim()
@@ -60,16 +120,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid scores' }, { status: 400 })
     }
 
-    // Log to Vercel function log — visible in the dashboard until email integration is wired.
-    console.log('[assessment-lead]', JSON.stringify({
-      timestamp: new Date().toISOString(),
+    const payload: AssessmentLeadPayload = {
       email,
+      websiteUrl: websiteUrl || undefined,
       role,
       companyStage,
-      note: note || null,
+      note: note || undefined,
       scores,
-      answers,
+      answers: answers ?? {},
+    }
+
+    // 1. Always log (visible in Vercel function logs)
+    console.log('[assessment-lead]', JSON.stringify({
+      timestamp: new Date().toISOString(),
+      ...payload,
     }))
+
+    // 2. Try to send email notification (no-op if env vars missing)
+    try {
+      await sendNotification(payload)
+    } catch (err) {
+      // Log but don't fail the request — the lead is already captured in logs
+      console.error('[assessment-lead] notification failed:', err)
+    }
 
     return NextResponse.json({ ok: true })
   } catch (error) {

@@ -234,6 +234,7 @@ export default function Assessment() {
   const [stage, setStage] = useState<Stage>('questions')
   const [direction, setDirection] = useState(1)
   const [email, setEmail] = useState('')
+  const [websiteUrl, setWebsiteUrl] = useState('')
   const [role, setRole] = useState<string | null>(null)
   const [companyStage, setCompanyStage] = useState<string | null>(null)
   const [note, setNote] = useState('')
@@ -275,6 +276,7 @@ export default function Assessment() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email: trimmed,
+            websiteUrl: websiteUrl.trim() || undefined,
             role,
             companyStage,
             note: note.trim() || undefined,
@@ -565,6 +567,25 @@ export default function Assessment() {
                   }}
                 />
 
+                {/* Website URL */}
+                <FieldLabel optional>Company website</FieldLabel>
+                <input
+                  type="url"
+                  inputMode="url"
+                  autoComplete="url"
+                  placeholder="company.com — so I can look you up before responding"
+                  value={websiteUrl}
+                  onChange={(e) => setWebsiteUrl(e.target.value)}
+                  disabled={submitting}
+                  className="w-full px-4 py-2.5 rounded text-[13px] outline-none transition-colors mb-4"
+                  style={{
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    color: '#ffffff',
+                    fontFamily: 'var(--font-mono)',
+                  }}
+                />
+
                 {/* Role */}
                 <FieldLabel>Your role</FieldLabel>
                 <PillGroup
@@ -734,6 +755,7 @@ export default function Assessment() {
                   setAnswers({})
                   setCurrentStep(0)
                   setEmail('')
+                  setWebsiteUrl('')
                   setRole(null)
                   setCompanyStage(null)
                   setNote('')
