@@ -221,10 +221,19 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
               display: 'inline-block',
             }}
           />
-          <span className="text-[16px] font-bold text-white">{agent.name}</span>
           <span
-            className="text-[11px] uppercase tracking-[0.15em] px-2 py-0.5 rounded-full border"
-            style={{ color: agent.statusColor, borderColor: `${agent.statusColor}66` }}
+            style={{
+              fontSize: 13,
+              fontWeight: 500,
+              color: 'rgba(255,255,255,0.55)',
+              letterSpacing: '0.01em',
+            }}
+          >
+            {agent.name}
+          </span>
+          <span
+            className="text-[10px] uppercase tracking-[0.18em] px-2 py-0.5 rounded-full border"
+            style={{ color: agent.statusColor, borderColor: `${agent.statusColor}55`, opacity: 0.85 }}
           >
             {agent.status}
           </span>
@@ -237,7 +246,19 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             </svg>
           </span>
         </div>
-        <p className="text-[15px] italic mt-1.5" style={{ color: 'rgba(255,255,255,0.4)' }}>
+        {/* Quote is the hero of the row — large, italic, near-full white. The
+            name + status above act as supporting metadata. */}
+        <p
+          className="italic"
+          style={{
+            fontSize: 22,
+            fontWeight: 500,
+            color: 'rgba(255,255,255,0.92)',
+            lineHeight: 1.4,
+            marginTop: 12,
+            marginBottom: 2,
+          }}
+        >
           {agent.quote}
         </p>
         <div
