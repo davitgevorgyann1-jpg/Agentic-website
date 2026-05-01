@@ -15,7 +15,7 @@ interface Props {
 const SECTION_LABELS = [
   'Home',
   'The Problem',
-  'The Shift',
+  'The Question',
   'Strategy',
   'Operations',
   'Your Agent',

@@ -7,7 +7,7 @@ import { useState } from 'react'
 const MENU_SECTIONS = [
   { label: 'Home',           id: 'hero' },
   { label: 'The Problem',    id: 'broken' },
-  { label: 'The Shift',      id: 'turning-point' },
+  { label: 'The Question',   id: 'turning-point' },
   { label: 'Strategy',       id: 'strategy' },
   { label: 'Operations',     id: 'operations' },
   { label: 'Your Agent',     id: 'agents' },

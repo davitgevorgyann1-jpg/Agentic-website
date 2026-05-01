@@ -218,7 +218,7 @@ export default function OperationsLayer() {
             <div className="flex-1 h-px" style={{ background: `linear-gradient(to right, ${GREEN}66, transparent)` }} />
           </div>
           <h2 className="text-[clamp(32px,5vw,48px)] font-bold text-white mb-3">
-            Yes, I automate operations too.
+            Operations connected to a goal that matters.
           </h2>
           <p className="text-[18px] mb-8" style={{ color: 'rgba(255,255,255,0.5)' }}>
             Every AI agency does this. The difference? My agents are connected to your strategy. Every one knows exactly why it exists, because it was designed{' '}

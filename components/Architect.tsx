@@ -71,10 +71,7 @@ export default function Architect() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-8"
         >
-          <h2 className="text-[clamp(24px,5vw,32px)] font-normal text-white mb-2">Davit Gevorgyan</h2>
-          <p className="text-[14px]" style={{ color: 'rgba(255,255,255,0.35)' }}>
-            Strategy-Led AI Transformation
-          </p>
+          <h2 className="text-[clamp(24px,5vw,32px)] font-normal text-white">Davit Gevorgyan</h2>
         </motion.div>
 
         {/* Bio */}

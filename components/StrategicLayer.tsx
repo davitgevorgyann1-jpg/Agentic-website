@@ -235,7 +235,7 @@ export default function StrategicLayer() {
             Agents that make your leadership team smarter.
           </h2>
           <p className="text-[18px] mb-8" style={{ color: 'rgba(255,255,255,0.5)' }}>
-            These are examples of strategic agents I build. Yours will be designed around your strategy, your OKRs, your competitive landscape.
+            Examples of what&apos;s possible. Yours will be designed around your real OKRs and your real competitive landscape.
           </p>
         </motion.div>
 
@@ -279,7 +279,7 @@ export default function StrategicLayer() {
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="mt-10">
           <div className="section-divider" style={{ color: 'rgba(255,255,255,0.35)' }}>
             <span style={{ background: `linear-gradient(to right, transparent, ${BLUE}44, transparent)`, height: 1 }} />
-            <span className="whitespace-nowrap">4 AGENTS DEPLOYED | ALL SYSTEMS NOMINAL</span>
+            <span className="whitespace-nowrap">4 AGENTS DESIGNED | ALL SYSTEMS NOMINAL</span>
             <span style={{ background: `linear-gradient(to right, transparent, ${BLUE}44, transparent)`, height: 1 }} />
           </div>
         </motion.div>
