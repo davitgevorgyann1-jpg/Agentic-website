@@ -17,7 +17,7 @@ export function renderEmphasized(text: string): React.ReactNode {
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**')) {
       return (
-        <span key={i} style={{ color: '#ffffff', fontWeight: 700 }}>
+        <span key={i} style={{ color: 'rgba(255,255,255,0.75)', fontWeight: 700 }}>
           {part.slice(2, -2)}
         </span>
       )

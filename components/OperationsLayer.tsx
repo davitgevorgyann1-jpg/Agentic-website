@@ -142,7 +142,7 @@ const AGENTS: OpsAgent[] = [
     name: 'The Process Auditor',
     status: 'CONNECTED',
     quote: 'I mapped 47 processes. 12 had no strategic reason to exist.',
-    dialogue: "I'm the Process Auditor. Before any automation happens, I map every business process to your strategic objectives. A real example: I analyzed **47 processes** across 4 departments. Here's what I found: 23 were strategically aligned and candidates for optimization. **12 had no connection to any current goal**. They were leftovers from old initiatives. 8 were prime automation candidates with clear ROI. 4 should have been eliminated entirely. I saved the company from **automating 12 processes that had no reason to exist**.",
+    dialogue: "I'm the Process Auditor. Before any automation happens, I map every business process to your strategic objectives. **A real example:** I analyzed **47 processes** across 4 departments. Here's what I found: 23 were strategically aligned and candidates for optimization. **12 had no connection to any current goal**. They were leftovers from old initiatives. 8 were prime automation candidates with clear ROI. 4 should have been eliminated entirely. I saved the company from **automating 12 processes that had no reason to exist**.",
   },
 ]
 
