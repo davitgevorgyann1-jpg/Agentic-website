@@ -237,15 +237,16 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote: 70/30 mix of the earthen amber (#D49A5C, RGB 212/154/92)
-            with the muted gray (~#6F6F6F, RGB 111/111/111). Lands at
-            #B58D62 — sharper than the 60/40 mix, still calmer than the
-            full earthen pastel; gray is still tempering it. */}
+        {/* Quote: 60/40 mix of the section BASE amber (#D97706) with the
+            muted gray (~#6F6F6F). Skipping the lightening pastel intermediate
+            and mixing the base directly gives a deeper, more saturated
+            result — lands at #AE7330. Reads as grounded amber, more
+            "influential" than the prior pastel mixes which felt washed out. */}
         <p
           style={{
             fontSize: 16,
             fontWeight: 500,
-            color: '#B58D62',
+            color: '#AE7330',
             lineHeight: 1.55,
             marginTop: 14,
             marginBottom: 4,

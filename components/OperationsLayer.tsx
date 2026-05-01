@@ -181,14 +181,15 @@ function AgentRow({ agent, index }: { agent: OpsAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote: 70/30 mix of an earthen-pastel green (#5CD689, hsl 142/60/60)
-            with the muted gray (~#6F6F6F). Lands at #62B781 — sharper than
-            the 60/40 mix, still calmer than the full pastel. */}
+        {/* Quote: 60/40 mix of the section BASE green (#16A34A) with the
+            muted gray (~#6F6F6F). Mixing the base directly (not the lightened
+            pastel intermediate) lands at #398E59 — deeper and more saturated
+            than the previous mix; reads as grounded forest green. */}
         <p
           style={{
             fontSize: 16,
             fontWeight: 500,
-            color: '#62B781',
+            color: '#398E59',
             lineHeight: 1.55,
             marginTop: 14,
             marginBottom: 4,

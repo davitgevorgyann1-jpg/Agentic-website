@@ -195,14 +195,15 @@ function AgentRow({ agent, index }: { agent: StrategicAgent; index: number }) {
             </svg>
           </span>
         </div>
-        {/* Quote: 70/30 mix of an earthen-pastel blue (#5C83D6, hsl 221/60/60)
-            with the muted gray (~#6F6F6F). Lands at #627DB7 — sharper than
-            the 60/40 mix, still calmer than the full pastel. */}
+        {/* Quote: 60/40 mix of the section BASE blue (#2563EB) with the
+            muted gray (~#6F6F6F). Mixing the base directly (not the lightened
+            pastel intermediate) lands at #4268B9 — deeper and more saturated
+            than the previous mix; reads as grounded royal blue. */}
         <p
           style={{
             fontSize: 16,
             fontWeight: 500,
-            color: '#627DB7',
+            color: '#4268B9',
             lineHeight: 1.55,
             marginTop: 14,
             marginBottom: 4,
