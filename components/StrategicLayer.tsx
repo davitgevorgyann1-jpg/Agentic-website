@@ -186,24 +186,6 @@ function AgentRow({ agent, index }: { agent: StrategicAgent; index: number }) {
           <span className="animate-pulse-steady flex-shrink-0" style={{ width: 7, height: 7, borderRadius: '50%', background: BLUE, display: 'inline-block', color: BLUE }} />
           <span className="text-[16px] font-bold text-white">{agent.name}</span>
           <span className="text-[11px] uppercase tracking-[0.15em] px-2 py-0.5 rounded-full border" style={{ color: BLUE, borderColor: `${BLUE}66` }}>ACTIVE</span>
-          {/* Meta-label (not in-character): signals to the visitor that this
-              agent is an illustrative example, not a real deployment. Visual
-              language deliberately different from the ACTIVE status pill —
-              dashed border + neutral gray + smaller size — so the eye reads
-              it as the author's note, not the agent's status. */}
-          <span
-            className="uppercase rounded-full"
-            style={{
-              fontSize: 9,
-              letterSpacing: '0.2em',
-              padding: '2px 8px',
-              color: 'rgba(255,255,255,0.4)',
-              border: '1px dashed rgba(255,255,255,0.18)',
-              fontFamily: 'var(--font-mono)',
-            }}
-          >
-            Illustrative
-          </span>
           <span
             className={`agent-expand-hint${expanded ? ' expanded' : ''}`}
             style={{ marginLeft: 'auto', color: `${BLUE}bb` }}
