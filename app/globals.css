@@ -151,7 +151,7 @@ body {
   height: 1px;
 }
 
-/* ─── Calendly panel — responsive width ─── */
+/* ─── Calendly panel, responsive width ─── */
 #calendly-panel {
   width: 500px;
   max-width: 100vw;
@@ -203,9 +203,9 @@ body {
   50%       { opacity: 1;   transform: translateY(2px); }
 }
 
-/* Nav menu button — desktop hidden */
+/* Nav menu button, desktop hidden */
 .nav-menu-btn { display: none !important; }
-/* Nav menu overlay — desktop hidden */
+/* Nav menu overlay, desktop hidden */
 .nav-menu-overlay { display: none !important; }
 
 /* ─── Mobile optimizations ─── */
@@ -231,7 +231,7 @@ body {
   .nav-menu-btn { display: flex !important; }
   /* Full-screen menu overlay */
   .nav-menu-overlay { display: flex !important; }
-  /* Normal continuous scroll — disable fullpage cage */
+  /* Normal continuous scroll, disable fullpage cage */
   body {
     overflow-y: auto;
     height: auto;
@@ -242,10 +242,10 @@ body {
     overflow-y: visible;
   }
 
-  /* Hide sidebar nav dots — too small to be useful, and takes 70px of narrow viewport */
+  /* Hide sidebar nav dots, too small to be useful, and takes 70px of narrow viewport */
   .fp-sidebar { display: none !important; }
 
-  /* Hide floating bottom-right CTA — all sections have inline CTAs */
+  /* Hide floating bottom-right CTA, all sections have inline CTAs */
   .fp-cta { display: none !important; }
 
   /* Agent rows: smaller gap so robot + text fit comfortably */

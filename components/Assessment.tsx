@@ -154,7 +154,7 @@ function FieldLabel({ children, optional }: { children: React.ReactNode; optiona
             fontFamily: 'var(--font-mono)',
           }}
         >
-          — optional
+          (optional)
         </span>
       )}
     </div>
@@ -596,7 +596,7 @@ export default function Assessment() {
                   type="url"
                   inputMode="url"
                   autoComplete="url"
-                  placeholder="company.com — so I can look you up before responding"
+                  placeholder="company.com (so I can look you up before responding)"
                   value={websiteUrl}
                   onChange={(e) => setWebsiteUrl(e.target.value)}
                   disabled={submitting}
@@ -633,7 +633,7 @@ export default function Assessment() {
                 <div className="mt-4">
                   <FieldLabel optional>Anything specific you&apos;d like me to look at?</FieldLabel>
                   <textarea
-                    placeholder="A line or two — completely optional."
+                    placeholder="A line or two. Completely optional."
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     disabled={submitting}
@@ -674,7 +674,7 @@ export default function Assessment() {
                       padding: 0,
                     }}
                   >
-                    Skip — just show my score
+                    Skip. Show my score
                   </button>
 
                   <button
@@ -712,7 +712,7 @@ export default function Assessment() {
                   padding: '48px 32px',
                 }}
               >
-                {/* Animated checkmark — circle draws first, then check strokes in */}
+                {/* Animated checkmark, circle draws first, then check strokes in */}
                 <motion.svg
                   width="72"
                   height="72"

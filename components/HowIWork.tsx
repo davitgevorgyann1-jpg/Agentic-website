@@ -17,8 +17,8 @@ const PHASES: Phase[] = [
   {
     number: '01',
     title: 'Strategic Audit',
-    subtitle: 'Find the strategy you actually have — not the one in the deck.',
-    body: 'I read your strategy docs, OKRs, and board decks. I interview your leadership one-on-one. I find the gap between what is written and what is actually believed — and write down what your strategy really is.',
+    subtitle: 'Find the strategy you actually have, not the one in the deck.',
+    body: 'I read your strategy docs, OKRs, and board decks. I interview your leadership one-on-one. I find the gap between what is written and what is actually believed, then write down what your strategy really is.',
     outcome: 'Three to five priorities. Stack-ranked. Committed to in writing.',
     time: '1–2 weeks',
   },
@@ -26,7 +26,7 @@ const PHASES: Phase[] = [
     number: '02',
     title: 'Alignment Design',
     subtitle: 'Design the layer that turns strategy into execution.',
-    body: 'I take your priorities and design what your operations need to look like. Strategic agents your leadership needs. Operational agents your teams need. Existing automations get tested against the same priorities — most fail. Every piece in the blueprint traces back to a priority.',
+    body: 'I take your priorities and design what your operations need to look like. Strategic agents your leadership needs. Operational agents your teams need. Existing automations get tested against the same priorities. Most fail. Every piece in the blueprint traces back to a priority.',
     outcome: 'A blueprint: what should exist, what should be kept, what should be killed. Plus the system that prevents future drift.',
     time: '2–3 weeks',
   },
@@ -48,7 +48,7 @@ const PHASES: Phase[] = [
   },
 ]
 
-// Baseline opacities for the trail dots — fades down toward the next phase
+// Baseline opacities for the trail dots, fades down toward the next phase
 const TRAIL_DOTS = [0.7, 0.55, 0.45, 0.35, 0.28, 0.22, 0.16, 0.1]
 
 function PhaseRow({ phase, index, isLast }: { phase: Phase; index: number; isLast: boolean }) {
@@ -87,7 +87,7 @@ function PhaseRow({ phase, index, isLast }: { phase: Phase; index: number; isLas
           </span>
         </div>
 
-        {/* Vertical dot trail to next phase — distributes evenly across available column height */}
+        {/* Vertical dot trail to next phase, distributes evenly across available column height */}
         {!isLast && (
           <div
             className="flex flex-col items-center"
@@ -249,7 +249,7 @@ export default function HowIWork() {
           </p>
         </motion.div>
 
-        {/* Phases — small inter-row gap so the dot trails feel continuous */}
+        {/* Phases, small inter-row gap so the dot trails feel continuous */}
         <div className="flex flex-col" style={{ gap: 4 }}>
           {PHASES.map((phase, i) => (
             <PhaseRow

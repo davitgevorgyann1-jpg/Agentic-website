@@ -10,7 +10,7 @@ import HowIWork from '@/components/HowIWork'
 import HowWeWork from '@/components/HowWeWork'
 // import Testimonials from '@/components/Testimonials'
 // ↑ Uncomment when real testimonials are added (and update SECTION_LABELS in FullpageScroll.tsx
-//   and MENU_SECTIONS in Nav.tsx — see comments in those files).
+//   and MENU_SECTIONS in Nav.tsx, see comments in those files).
 import Assessment from '@/components/Assessment'
 import Footer from '@/components/Footer'
 import FullpageScroll from '@/components/FullpageScroll'
@@ -54,7 +54,7 @@ export default function Home() {
           <Architect />
         </div>
 
-        {/* Section 8: How I Work (the methodology — top-down) */}
+        {/* Section 8: How I Work (the methodology, top-down) */}
         <div className="fp-section-scroll">
           <HowIWork />
         </div>
@@ -65,7 +65,7 @@ export default function Home() {
         </div>
 
         {/*
-          Testimonials slot — drop in here when real quotes are gathered:
+          Testimonials slot, drop in here when real quotes are gathered:
 
           <div className="fp-section-scroll">
             <Testimonials />

@@ -12,7 +12,7 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.davit-gevorgyan.com'),
-  title: 'Davit Gevorgyan — Strategy-Led AI Transformation',
+  title: 'Davit Gevorgyan · Strategy-Led AI Transformation',
   description:
     'Davit Gevorgyan helps companies build AI agent systems that are connected to strategy, not just to tasks. Stop deploying broken agents. Start building systems that think.',
   keywords: [
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://www.davit-gevorgyan.com',
-    title: 'Davit Gevorgyan — Strategy-Led AI Transformation',
+    title: 'Davit Gevorgyan · Strategy-Led AI Transformation',
     description:
       'Most companies are deploying AI agents that automate tasks with no strategic alignment. Davit helps you build systems that actually move the needle.',
     siteName: 'Davit Gevorgyan',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Davit Gevorgyan — Strategy-Led AI Transformation',
+    title: 'Davit Gevorgyan · Strategy-Led AI Transformation',
     description:
       'Most companies are deploying AI agents that automate tasks with no strategic alignment. Davit helps you build systems that actually move the needle.',
   },

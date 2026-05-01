@@ -14,7 +14,7 @@ export function InteractiveRobotSpline({ scene, className = '' }: InteractiveRob
     <Suspense
       fallback={
         <div className={`w-full h-full flex items-center justify-center ${className}`}>
-          {/* Silent fallback — spiral is visible behind while robot loads */}
+          {/* Silent fallback, spiral is visible behind while robot loads */}
         </div>
       }
     >

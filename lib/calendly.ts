@@ -1,6 +1,6 @@
 export const CALENDLY_URL = 'https://calendly.com/introo/davit-gevorgyan'
 
-// Dark-themed iframe URL — Calendly supports these URL params for inline embeds
+// Dark-themed iframe URL, Calendly supports these URL params for inline embeds
 const IFRAME_URL =
   `${CALENDLY_URL}?hide_gdpr_banner=1` +
   `&background_color=ffffff` +
@@ -13,7 +13,7 @@ export function openCalendly() {
   const iframe   = document.getElementById('calendly-iframe')  as HTMLIFrameElement | null
   if (!backdrop || !panel) return
 
-  // Lazy-load iframe — set src only on first open to avoid loading Calendly on page load
+  // Lazy-load iframe, set src only on first open to avoid loading Calendly on page load
   if (iframe && !iframe.src.includes('calendly.com')) {
     iframe.src = IFRAME_URL
   }

@@ -37,7 +37,7 @@ export default function Nav() {
             Davit Gevorgyan
           </a>
 
-          {/* Hamburger — mobile only */}
+          {/* Hamburger, mobile only */}
           <button
             className="nav-menu-btn"
             onClick={() => setMenuOpen(o => !o)}
@@ -60,7 +60,7 @@ export default function Nav() {
         </div>
       </header>
 
-      {/* Full-screen nav overlay — mobile only, rendered via CSS display control */}
+      {/* Full-screen nav overlay, mobile only, rendered via CSS display control */}
       {menuOpen && (
         <div
           className="nav-menu-overlay"

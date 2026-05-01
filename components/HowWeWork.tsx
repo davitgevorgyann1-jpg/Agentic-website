@@ -18,7 +18,7 @@ const EMBED: FormatCard = {
   title: 'The Embed',
   tagline: 'I become your fractional AI strategy lead.',
   body:
-    '80 hours a month. Embedded in your team — in your Slack, in your leadership meetings, in your roadmap. I lead the audit, design the alignment layer, and build the agents from inside the company, not from outside it.',
+    '80 hours a month. Embedded in your team: in your Slack, in your leadership meetings, in your roadmap. I lead the audit, design the alignment layer, and build the agents from inside the company, not from outside it.',
   bullets: [
     'Continuous strategic involvement',
     'Lead the work from inside the team',

@@ -4,19 +4,19 @@ import { NextResponse } from 'next/server'
  * /api/assessment-lead
  *
  * Receives a completed assessment + lead context and:
- *   1. Logs the lead (always — visible in Vercel function logs)
+ *   1. Logs the lead (always, visible in Vercel function logs)
  *   2. If TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID env vars are set,
  *      sends a push notification to that Telegram chat.
  *   3. If RESEND_API_KEY + NOTIFICATION_EMAIL env vars are set, also
  *      emails the lead details with reply-to set to the lead's email.
  *
- * Each notification channel is independent — set one, both, or neither.
+ * Each notification channel is independent, set one, both, or neither.
  *
  * ─── TELEGRAM SETUP (recommended, ~5 minutes) ─────────────────────────
  *   1. In Telegram, message @BotFather: /newbot
  *      Give it a name + handle. BotFather replies with a bot token.
  *   2. Search for your new bot, open the chat, hit "Start".
- *   3. Get your chat ID: message @userinfobot — it replies with your ID.
+ *   3. Get your chat ID: message @userinfobot, it replies with your ID.
  *   4. In Vercel → Environment Variables, add:
  *        TELEGRAM_BOT_TOKEN = (the token from step 1)
  *        TELEGRAM_CHAT_ID   = (your numeric ID from step 3)
@@ -73,7 +73,7 @@ function formatLeadEmailBody(p: AssessmentLeadPayload): string {
     ``,
     `─────────────────────────────────────────────`,
     ``,
-    `Reply directly to this email to respond — it goes straight to them.`,
+    `Reply directly to this email to respond. It goes straight to them.`,
   ]
   return lines.join('\n')
 }
@@ -87,7 +87,7 @@ async function sendEmailNotification(payload: AssessmentLeadPayload): Promise<vo
     return
   }
 
-  const subject = `Assessment lead — ${payload.email} (${payload.scores.overall}/100, ${payload.role})`
+  const subject = `Assessment lead: ${payload.email} (${payload.scores.overall}/100, ${payload.role})`
   const text = formatLeadEmailBody(payload)
 
   const res = await fetch('https://api.resend.com/emails', {
@@ -204,7 +204,7 @@ export async function POST(request: Request) {
 
     // 2. Fire all notification channels in parallel. Each is independently
     //    no-op when its env vars are missing. Failures in either don't
-    //    fail the request — the lead is already captured in logs.
+    //    fail the request, the lead is already captured in logs.
     await Promise.allSettled([
       sendTelegramNotification(payload),
       sendEmailNotification(payload),

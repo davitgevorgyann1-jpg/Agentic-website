@@ -140,17 +140,17 @@ const AGENTS: StrategicAgent[] = [
   {
     name: 'Competitor Intelligence Agent',
     quote: 'Every Monday, 7am. 12 competitors analyzed. Your move.',
-    dialogue: "I'm the Competitor Intelligence Agent. Every Monday at 7am, before your leadership team starts the week, I deliver a structured competitive analysis. I monitor 12 competitors across pricing changes, feature launches, hiring patterns, funding announcements, and market positioning shifts. Last month, I detected that your biggest competitor quietly raised their enterprise pricing by 18%. Your sales team adjusted their pitch before the competitor even announced it publicly. I turn 5 hours of manual research into a 20-minute automated briefing.",
+    dialogue: "I'm the Competitor Intelligence Agent. Every Monday at 7am, before your leadership team starts the week, I deliver a structured competitive analysis. I monitor 12 competitors across pricing changes, feature launches, hiring patterns, funding announcements, and market positioning shifts. A real example: I caught a competitor quietly raising their enterprise pricing by 18%. The sales team had time to adjust their pitch before the competitor even announced it publicly. I turn 5 hours of manual research into a 20-minute automated briefing.",
   },
   {
     name: 'The Alignment Gatekeeper',
     quote: 'No initiative enters the pipeline without my approval.',
-    dialogue: "I'm the Alignment Gatekeeper, the most important agent in the system. Before any new initiative, project, or feature enters your pipeline, I cross-reference it against your OKRs, strategy documents, resource constraints, and current priorities. Last month, a well-intentioned team proposed a 6-week project to build an AI chatbot for sales demos. I flagged it: the project didn't map to any current objective, would consume 30% of the engineering team's Q2 capacity, and conflicted with the strategic priority of reducing time-to-value for existing customers. The team redirected their energy to something that actually mattered.",
+    dialogue: "I'm the Alignment Gatekeeper, the most important agent in the system. Before any new initiative, project, or feature enters your pipeline, I cross-reference it against your OKRs, strategy documents, resource constraints, and current priorities. A real example: a team proposed a 6-week project to build an AI chatbot for sales demos. I flagged it: the project did not map to any current objective, would have consumed 30% of the engineering team's Q2 capacity, and conflicted with the strategic priority of reducing time-to-value for existing customers. The team redirected their energy to something that actually mattered.",
   },
   {
     name: 'Strategy Pulse Monitor',
     quote: 'When your key metrics drift, I flag it within hours, not months.',
-    dialogue: "I watch your key strategic metrics in real-time and cross-reference them against your quarterly objectives. When NPS dropped 4 points over two weeks last month, I flagged it the same day, along with the likely cause (a recent UX change that affected the onboarding flow). Without me, your team would have discovered this at the quarterly review, 6 weeks later, after hundreds more customers had the degraded experience.",
+    dialogue: "I watch your key strategic metrics in real-time and cross-reference them against your quarterly objectives. A real example: NPS dropped 4 points over two weeks. I flagged it the same day, along with the likely cause (a recent UX change that affected the onboarding flow). Without me, the team would have discovered this at the quarterly review, six weeks later, after hundreds more customers had the degraded experience.",
   },
   {
     name: 'OKR Intelligence Agent',
@@ -197,7 +197,7 @@ function AgentRow({ agent, index }: { agent: StrategicAgent; index: number }) {
         </div>
         {/* Quote: 60/40 mix of the section BASE blue (#2563EB) with the
             muted gray (~#6F6F6F). Mixing the base directly (not the lightened
-            pastel intermediate) lands at #4268B9 — deeper and more saturated
+            pastel intermediate) lands at #4268B9, deeper and more saturated
             than the previous mix; reads as grounded royal blue. */}
         <p
           style={{

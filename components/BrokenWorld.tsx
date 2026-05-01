@@ -240,7 +240,7 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
         {/* Quote: 60/40 mix of the section BASE amber (#D97706) with the
             muted gray (~#6F6F6F). Skipping the lightening pastel intermediate
             and mixing the base directly gives a deeper, more saturated
-            result — lands at #AE7330. Reads as grounded amber, more
+            result, lands at #AE7330. Reads as grounded amber, more
             "influential" than the prior pastel mixes which felt washed out. */}
         <p
           style={{

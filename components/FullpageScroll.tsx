@@ -60,7 +60,7 @@ function indexToPath(index: number): string {
 
 // Sizes by rank (0 = closest to cursor)
 const RANK_SIZE: { w: number; h: number }[] = [
-  { w: 10, h: 52 }, // rank 0 — closest
+  { w: 10, h: 52 }, // rank 0, closest
   { w: 8,  h: 46 }, // rank 1
   { w: 7,  h: 42 }, // rank 2
   { w: 6,  h: 40 }, // rank 3+ default
@@ -176,7 +176,7 @@ function SectionProgress({
               }}
             />
 
-            {/* Tooltip — 14px to the right of the bar, only for closest segment */}
+            {/* Tooltip, 14px to the right of the bar, only for closest segment */}
             <AnimatePresence>
               {showLabel && (
                 <motion.span
@@ -396,7 +396,7 @@ export default function FullpageScroll({ children }: Props) {
     }
   }, [current, goTo, isMobile])
 
-  // Desktop: sync URL path to current section (no hash — clean paths like "/strategy",
+  // Desktop: sync URL path to current section (no hash, clean paths like "/strategy",
   // and "/" for the hero). next.config.js rewrites map these paths back to the home page
   // so refreshes and direct shares still work.
   useEffect(() => {
@@ -424,7 +424,7 @@ export default function FullpageScroll({ children }: Props) {
     if (isMobile) return
     const idx = pathToIndex(window.location.pathname)
     if (idx > 0) goTo(idx)
-    // Run only once on mount — no deps
+    // Run only once on mount, no deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

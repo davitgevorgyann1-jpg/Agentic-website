@@ -141,7 +141,7 @@ const AGENTS: OpsAgent[] = [
     name: 'The Process Auditor',
     status: 'CONNECTED',
     quote: 'I mapped 47 processes. 12 had no strategic reason to exist.',
-    dialogue: "I'm the Process Auditor. Before any automation happens, I map every business process to your strategic objectives. Last quarter, I analyzed 47 processes across 4 departments. Here's what I found: 23 were strategically aligned and candidates for optimization. 12 had no connection to any current goal, they were leftovers from old initiatives. 8 were prime automation candidates with clear ROI. 4 should have been eliminated entirely. I saved the company from automating 12 processes that had no reason to exist.",
+    dialogue: "I'm the Process Auditor. Before any automation happens, I map every business process to your strategic objectives. A real example: I analyzed 47 processes across 4 departments. Here's what I found: 23 were strategically aligned and candidates for optimization. 12 had no connection to any current goal. They were leftovers from old initiatives. 8 were prime automation candidates with clear ROI. 4 should have been eliminated entirely. I saved the company from automating 12 processes that had no reason to exist.",
   },
 ]
 
@@ -183,7 +183,7 @@ function AgentRow({ agent, index }: { agent: OpsAgent; index: number }) {
         </div>
         {/* Quote: 60/40 mix of the section BASE green (#16A34A) with the
             muted gray (~#6F6F6F). Mixing the base directly (not the lightened
-            pastel intermediate) lands at #398E59 — deeper and more saturated
+            pastel intermediate) lands at #398E59, deeper and more saturated
             than the previous mix; reads as grounded forest green. */}
         <p
           style={{
@@ -218,7 +218,7 @@ export default function OperationsLayer() {
             <div className="flex-1 h-px" style={{ background: `linear-gradient(to right, ${GREEN}66, transparent)` }} />
           </div>
           <h2 className="text-[clamp(32px,5vw,48px)] font-bold text-white mb-3">
-            Operations connected to a goal that matters.
+            Operations that know exactly why they exist.
           </h2>
           <p className="text-[18px] mb-8" style={{ color: 'rgba(255,255,255,0.5)' }}>
             Every AI agency does this. The difference? My agents are connected to your strategy. Every one knows exactly why it exists, because it was designed{' '}

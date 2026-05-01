@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { closeCalendlyOverlay } from '@/lib/calendly'
 
-// Direct DOM mutation for hover — avoids React re-renders that would reset
+// Direct DOM mutation for hover, avoids React re-renders that would reset
 // display/transform values set by openCalendly / closeCalendlyOverlay
 function onCloseEnter(e: React.MouseEvent<HTMLButtonElement>) {
   e.currentTarget.style.background = 'rgba(0,0,0,0.08)'
@@ -191,7 +191,7 @@ export default function CalendlyOverlay() {
         </div>
 
         {/* ── Calendly inline iframe ──────────────────────────── */}
-        {/* src is set lazily by openCalendly() — nothing loads until panel opens */}
+        {/* src is set lazily by openCalendly(), nothing loads until panel opens */}
         <div style={{ flex: 1, background: '#ffffff', display: 'flex', flexDirection: 'column' }}>
           <iframe
             id="calendly-iframe"

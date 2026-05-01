@@ -50,7 +50,7 @@ class AnimationController {
   }
 
   private setupTimeline() {
-    // Loop ONLY the forming phase (0 → 0.30) — stops before the scatter event
+    // Loop ONLY the forming phase (0 → 0.30), stops before the scatter event
     this.timeline.to(this, {
       time: 0.30,
       duration: 4.5,

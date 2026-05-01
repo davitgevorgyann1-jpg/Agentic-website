@@ -64,14 +64,14 @@ export default function TurningPoint() {
       >
         {CIRCUIT_LINES.map((cl, li) => (
           <g key={li}>
-            {/* Left half — broken/dashed line */}
+            {/* Left half, broken/dashed line */}
             <line
               x1="0%" y1={cl.y} x2="50%" y2={cl.y}
               stroke="rgba(255,255,255,0.04)"
               strokeWidth="0.5"
               strokeDasharray="6 3"
             />
-            {/* Right half — solid continuous line */}
+            {/* Right half, solid continuous line */}
             <line
               x1="50%" y1={cl.y} x2="100%" y2={cl.y}
               stroke="rgba(255,255,255,0.05)"

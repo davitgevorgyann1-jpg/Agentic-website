@@ -5,7 +5,7 @@ import { openCalendly } from '@/lib/calendly'
 
 // ─── TextScramble ────────────────────────────────────────────────────────────
 
-const CHARS = '!<>-_\\/[]{}—=+*^?#________'
+const CHARS = '!<>-_\\/[]{}=+*^?#________'
 
 interface QueueItem {
   from: string
@@ -102,7 +102,7 @@ function generateRainDrops(singleCount: number, wordCount: number): RainDrop[] {
   const drops: RainDrop[] = []
   const totalStreams = singleCount + wordCount
 
-  // Stratified x positions — divide viewport into equal slots with small jitter,
+  // Stratified x positions, divide viewport into equal slots with small jitter,
   // then shuffle so assignment is random but coverage is even (no clusters, no gaps)
   const xPositions = Array.from({ length: totalStreams }, (_, i) =>
     ((i + 0.15 + Math.random() * 0.7) / totalStreams) * 100

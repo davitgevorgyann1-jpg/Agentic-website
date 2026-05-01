@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Davit Gevorgyan — Strategy-Led AI Transformation'
+export const alt = 'Davit Gevorgyan · Strategy-Led AI Transformation'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -9,7 +9,7 @@ const GOLD = '#E2B97F'
 const BG = '#0a0a0f'
 
 // IMPORTANT: do not set `fontFamily: 'monospace'` (or any font we have not
-// explicitly loaded). Satori — the renderer behind ImageResponse — only
+// explicitly loaded). Satori, the renderer behind ImageResponse, only
 // ships with Inter by default. Referencing an unavailable font silently
 // produces a 0-byte PNG. Stick to Inter weights or fetch a font.
 export default async function OGImage() {
@@ -70,7 +70,7 @@ export default async function OGImage() {
           Davit Gevorgyan
         </div>
 
-        {/* Subhead — the thesis */}
+        {/* Subhead, the thesis */}
         <div
           style={{
             fontSize: 36,

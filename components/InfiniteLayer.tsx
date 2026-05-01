@@ -14,7 +14,7 @@ function InfiniteBot() {
       <circle cx="28" cy="4"  r="1.5" fill="rgba(34,211,238,0.7)" />
       <circle cx="28" cy="7"  r="1"   fill="rgba(6,182,212,0.5)"  />
 
-      {/* Head — dashed outline rows */}
+      {/* Head, dashed outline rows */}
       {[22,25,28,31,34].map((x,i) =>
         <circle key={`hA${i}`} cx={x} cy="10" r="1.3" stroke="rgba(6,182,212,0.5)" strokeWidth="0.8" strokeDasharray="1.5 1.5" />
       )}
@@ -28,11 +28,11 @@ function InfiniteBot() {
         <circle key={`hD${i}`} cx={x} cy="19" r="1.3" stroke="rgba(6,182,212,0.5)" strokeWidth="0.8" strokeDasharray="1.5 1.5" />
       )}
 
-      {/* Eyes — normal dot eyes */}
+      {/* Eyes, normal dot eyes */}
       <circle cx="24" cy="14" r="1.8" fill="rgba(103,232,249,0.9)" />
       <circle cx="32" cy="14" r="1.8" fill="rgba(103,232,249,0.9)" />
 
-      {/* Lower body — dashed outline */}
+      {/* Lower body, dashed outline */}
       {[24,28,32].map((x,i) =>
         <circle key={`lb${i}`} cx={x} cy="36" r="1.1" fill="none" stroke="rgba(6,182,212,0.35)" strokeWidth="0.7" strokeDasharray="1.5 1.5" />
       )}
@@ -151,7 +151,7 @@ export default function InfiniteLayer() {
             >
               <InfiniteBot />
             </motion.div>
-            {/* Dotted SVG ∞ — 1.5× size, cyan dashed stroke */}
+            {/* Dotted SVG ∞, 1.5× size, cyan dashed stroke */}
             <motion.div
               animate={{ y: [0, -3, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
@@ -238,7 +238,7 @@ export default function InfiniteLayer() {
       {/* ─── Bottom: Messenger + 80px breathing room ─────────── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
 
-        {/* Messenger content — centered in remaining space */}
+        {/* Messenger content, centered in remaining space */}
         <div
           style={{
             flex: 1,
@@ -314,7 +314,7 @@ export default function InfiniteLayer() {
               comes in. He builds us with purpose.
             </div>
 
-            {/* Meet Davit — dispatches custom event, no URL/hash changes */}
+            {/* Meet Davit, dispatches custom event, no URL/hash changes */}
             <span
               onClick={() => window.dispatchEvent(new CustomEvent('fp:goto', { detail: { id: 'architect' } }))}
               onMouseEnter={(e) => { e.currentTarget.style.textDecoration = 'underline' }}

@@ -23,7 +23,7 @@ interface Testimonial {
  * The section auto-hides if this array is empty.
  */
 const TESTIMONIALS: Testimonial[] = [
-  // Populate when real quotes are gathered. Example structure below — replace, don't ship.
+  // Populate when real quotes are gathered. Example structure below, replace, don't ship.
   // {
   //   quote: 'Davit forced us to kill three automations we were about to ship. Months of saved engineering.',
   //   attribution: 'VP Engineering, Series B SaaS, ~$15M ARR',
@@ -130,7 +130,7 @@ export default function Testimonials() {
                     fontFamily: 'var(--font-mono)',
                   }}
                 >
-                  — {t.attribution}
+                  / {t.attribution}
                 </span>
               </div>
             </motion.div>
