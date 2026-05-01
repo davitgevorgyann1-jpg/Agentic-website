@@ -12,10 +12,13 @@ interface Testimonial {
 /**
  * TESTIMONIALS
  *
- * Layout: the FIRST testimonial in the array is rendered as a featured /
- * marquee card at the top (full width, larger type, more presence). The
- * remaining testimonials render as a 2-column grid below. Pick the most
- * impactful quote for index 0.
+ * Layout: 2 / 2 / 1. First four testimonials render as a 2x2 grid; the
+ * fifth renders centered alone in a third row, same size as the others.
+ *
+ * Implementation: a 4-column grid with each card spanning 2 columns.
+ * Cards 1-4 fall into row 1 (cols 1-2 and 3-4), row 2 (cols 1-2 and 3-4).
+ * Card 5 uses `col-start-2 col-span-2`, occupying cols 2-3 — centered
+ * within the row.
  *
  * Format guide:
  *   - quote:        A specific moment, not generic praise.
@@ -25,7 +28,6 @@ interface Testimonial {
  */
 const TESTIMONIALS: Testimonial[] = [
   {
-    // Featured (rendered as marquee card)
     quote: 'I came in expecting a roadmap. Davit gave me a list of things we should stop building. That list saved us months of engineering work that would not have moved any of our metrics.',
     attribution: 'Founder, B2B SaaS, Series A',
   },
@@ -42,15 +44,13 @@ const TESTIMONIALS: Testimonial[] = [
     attribution: 'Founder, crypto payments startup',
   },
   {
-    quote: 'Most strategy consultants do not write code. Davit does. When my engineers had questions, he sat with them. The strategy survived contact with implementation because of that.',
-    attribution: 'CTO, enterprise platform',
+    quote: 'Davit walked into a half-built AI agent and asked what business outcome it tied to. Nobody had a clean answer. We killed it that week and rebuilt from the strategy down. The replacement now flags every roadmap proposal against our OKRs.',
+    attribution: 'Head of Product, growth-stage SaaS',
   },
 ]
 
 export default function Testimonials() {
   if (TESTIMONIALS.length === 0) return null
-
-  const [featured, ...rest] = TESTIMONIALS
 
   return (
     <section
@@ -88,83 +88,21 @@ export default function Testimonials() {
           </div>
         </motion.div>
 
-        {/* Featured testimonial — larger, marquee treatment */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.5 }}
-          className="rounded-lg flex flex-col mx-auto mt-8"
-          style={{
-            maxWidth: 820,
-            background: 'rgba(226,185,127,0.04)',
-            border: '1px solid rgba(226,185,127,0.22)',
-            padding: 36,
-            position: 'relative',
-            boxShadow: `0 0 40px ${GOLD}0d`,
-          }}
-        >
-          {/* Larger open-quote glyph for the featured card */}
-          <span
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              top: 14,
-              left: 22,
-              fontSize: 76,
-              lineHeight: 1,
-              color: GOLD,
-              opacity: 0.18,
-              fontFamily: 'var(--font-mono)',
-            }}
-          >
-            &ldquo;
-          </span>
-
-          <p
-            className="mb-6 relative"
-            style={{
-              fontSize: 18,
-              color: 'rgba(255,255,255,0.92)',
-              lineHeight: 1.65,
-              zIndex: 1,
-              fontStyle: 'italic',
-            }}
-          >
-            {featured.quote}
-          </p>
-
-          <div
-            style={{
-              paddingTop: 14,
-              borderTop: `1px solid ${GOLD}33`,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 12,
-                color: GOLD,
-                opacity: 0.9,
-                letterSpacing: '0.06em',
-                fontFamily: 'var(--font-mono)',
-              }}
-            >
-              / {featured.attribution}
-            </span>
-          </div>
-        </motion.div>
-
-        {/* Grid of remaining testimonials — 2 columns on desktop */}
-        {rest.length > 0 && (
-          <div className="grid md:grid-cols-2 gap-6 mt-6">
-            {rest.map((t, i) => (
+        {/* Testimonials: 4-column grid where each card spans 2 cols.
+            Cards 1-4 fill rows 1-2 (2 per row). Card 5 is centered in row 3
+            via col-start-2 col-span-2 (occupies cols 2-3, leaving 1 and 4 empty). */}
+        <div className="grid md:grid-cols-4 gap-6 mt-8">
+          {TESTIMONIALS.map((t, i) => {
+            const isFifth = i === 4
+            const colSpan = isFifth ? 'md:col-span-2 md:col-start-2' : 'md:col-span-2'
+            return (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="rounded-lg flex flex-col"
+                transition={{ duration: 0.5, delay: (i % 2) * 0.1 }}
+                className={`rounded-lg flex flex-col ${colSpan}`}
                 style={{
                   background: 'rgba(255,255,255,0.02)',
                   border: '1px solid rgba(255,255,255,0.08)',
@@ -220,9 +158,9 @@ export default function Testimonials() {
                   </span>
                 </div>
               </motion.div>
-            ))}
-          </div>
-        )}
+            )
+          })}
+        </div>
       </div>
     </section>
   )
