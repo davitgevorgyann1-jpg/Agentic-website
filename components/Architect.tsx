@@ -83,11 +83,11 @@ export default function Architect() {
           className="flex flex-col gap-4 mb-10"
         >
           <p className="text-[13px] leading-[1.8]" style={{ color: 'rgba(255,255,255,0.5)' }}>
-            I spent 11+ years leading product across SaaS, payments, and Web3. Risk products at{' '}
+            I spent 11+ years leading product across SaaS, payments, and Web3, building everything from risk products at{' '}
             <span style={{ color: '#ffffff', fontWeight: 700 }}>Deloitte</span>
-            . CRM platform at{' '}
+            , to CRM platforms at{' '}
             <span style={{ color: '#ffffff', fontWeight: 700 }}>Sporty</span>
-            . Incentive architecture at{' '}
+            , to incentive architecture at{' '}
             <span style={{ color: '#ffffff', fontWeight: 700 }}>Gettr</span>
             . In that time, I cut{' '}
             <span style={{ color: '#ffffff', fontWeight: 700 }}>85+ features</span>
