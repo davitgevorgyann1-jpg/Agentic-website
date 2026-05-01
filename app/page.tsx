@@ -8,9 +8,7 @@ import InfiniteLayer from '@/components/InfiniteLayer'
 import Architect from '@/components/Architect'
 import HowIWork from '@/components/HowIWork'
 import HowWeWork from '@/components/HowWeWork'
-// import Testimonials from '@/components/Testimonials'
-// ↑ Uncomment when real testimonials are added (and update SECTION_LABELS in FullpageScroll.tsx
-//   and MENU_SECTIONS in Nav.tsx, see comments in those files).
+import Testimonials from '@/components/Testimonials'
 import Assessment from '@/components/Assessment'
 import Footer from '@/components/Footer'
 import FullpageScroll from '@/components/FullpageScroll'
@@ -54,25 +52,22 @@ export default function Home() {
           <Architect />
         </div>
 
-        {/* Section 8: How I Work (the methodology, top-down) */}
+        {/* Section 8: Testimonials (between Architect and How I Work) */}
+        <div className="fp-section-scroll">
+          <Testimonials />
+        </div>
+
+        {/* Section 9: How I Work (the methodology, top-down) */}
         <div className="fp-section-scroll">
           <HowIWork />
         </div>
 
-        {/* Section 9: How We Work Together (engagement formats) */}
+        {/* Section 10: How We Work Together (engagement formats) */}
         <div className="fp-section-scroll">
           <HowWeWork />
         </div>
 
-        {/*
-          Testimonials slot, drop in here when real quotes are gathered:
-
-          <div className="fp-section-scroll">
-            <Testimonials />
-          </div>
-        */}
-
-        {/* Section 10: Assessment */}
+        {/* Section 11: Assessment */}
         <div className="fp-section-scroll">
           <Assessment />
         </div>

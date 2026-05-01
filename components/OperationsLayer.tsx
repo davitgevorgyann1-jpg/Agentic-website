@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { renderEmphasized } from '@/lib/renderEmphasized'
 
 // ─── Angular Green Dot Robot SVGs (with upward connection dots) ──────────────
 
@@ -129,19 +130,19 @@ const AGENTS: OpsAgent[] = [
     name: 'The Strategic Support Agent',
     status: 'CONNECTED',
     quote: 'I handle Tier 2 support, because strategy said Tier 1 stays human.',
-    dialogue: "I'm the Strategic Support Agent. I handle Tier 2 technical support tickets: troubleshooting, documentation lookups, and standard resolution paths. But here's what makes me different: I was deployed only AFTER a strategic audit confirmed that Tier 1 VIP support should remain human. Your strategy says 'white-glove support experience is our competitive moat.' So I stay away from VIP customers entirely. I know my boundaries because someone mapped them to your goals before I was built.",
+    dialogue: "I'm the Strategic Support Agent. I handle **Tier 2 technical support tickets**: troubleshooting, documentation lookups, and standard resolution paths. But here's what makes me different: I was deployed only AFTER a strategic audit confirmed that **Tier 1 VIP support should remain human**. Your strategy says '**white-glove support experience is our competitive moat.**' So I stay away from VIP customers entirely. I know my boundaries because someone mapped them to your goals before I was built.",
   },
   {
     name: 'The Aligned Onboarder',
     status: 'CONNECTED',
     quote: 'My onboarding flow was designed around your Q2 OKR.',
-    dialogue: "I run your new customer onboarding sequences: welcome emails, product tours, milestone check-ins, and activation nudges. But my entire workflow was designed around your Q2 objective: 'Reduce time-to-value by 30%.' Every touchpoint I send maps to a specific key result. When the OKR changes next quarter, my workflow gets updated too. I don't just onboard. I onboard in the direction your strategy is pointing.",
+    dialogue: "I run your new customer onboarding sequences: welcome emails, product tours, milestone check-ins, and activation nudges. But my entire workflow was designed around your Q2 objective: '**Reduce time-to-value by 30%.**' Every touchpoint I send maps to a specific key result. When the OKR changes next quarter, my workflow gets updated too. I don't just onboard. **I onboard in the direction your strategy is pointing.**",
   },
   {
     name: 'The Process Auditor',
     status: 'CONNECTED',
     quote: 'I mapped 47 processes. 12 had no strategic reason to exist.',
-    dialogue: "I'm the Process Auditor. Before any automation happens, I map every business process to your strategic objectives. A real example: I analyzed 47 processes across 4 departments. Here's what I found: 23 were strategically aligned and candidates for optimization. 12 had no connection to any current goal. They were leftovers from old initiatives. 8 were prime automation candidates with clear ROI. 4 should have been eliminated entirely. I saved the company from automating 12 processes that had no reason to exist.",
+    dialogue: "I'm the Process Auditor. Before any automation happens, I map every business process to your strategic objectives. A real example: I analyzed **47 processes** across 4 departments. Here's what I found: 23 were strategically aligned and candidates for optimization. **12 had no connection to any current goal**. They were leftovers from old initiatives. 8 were prime automation candidates with clear ROI. 4 should have been eliminated entirely. I saved the company from **automating 12 processes that had no reason to exist**.",
   },
 ]
 
@@ -200,7 +201,7 @@ function AgentRow({ agent, index }: { agent: OpsAgent; index: number }) {
           {agent.quote}
         </p>
         <div className="overflow-hidden transition-all duration-[400ms] ease-in-out" style={{ maxHeight: isOpen ? 600 : 0, opacity: isOpen ? 1 : 0 }}>
-          <div className="mt-3 pl-3 text-[14px] leading-[1.7]" style={{ color: 'rgba(255,255,255,0.5)', borderLeft: `1px solid ${GREEN}44` }}>{agent.dialogue}</div>
+          <div className="mt-3 pl-3 text-[14px] leading-[1.7]" style={{ color: 'rgba(255,255,255,0.5)', borderLeft: `1px solid ${GREEN}44` }}>{renderEmphasized(agent.dialogue)}</div>
         </div>
       </div>
     </motion.div>

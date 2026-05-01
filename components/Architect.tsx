@@ -7,9 +7,9 @@ const GOLD = '#E2B97F'
 const LINKEDIN = 'https://www.linkedin.com/in/dav-gevorgyan/'
 
 const HIGHLIGHTS = [
-  '10+ years product management',
-  'B2B SaaS specialization',
-  'Strategy + Implementation',
+  '11+ years product leadership',
+  '85+ features cut before shipping',
+  '60+ roadmaps reprioritized',
 ]
 
 export default function Architect() {
@@ -84,11 +84,17 @@ export default function Architect() {
         >
           <p className="text-[13px] leading-[1.8]" style={{ color: 'rgba(255,255,255,0.5)' }}>
             I spent{' '}
-            <span style={{ color: '#ffffff', fontWeight: 700 }}>10 years</span>
-            {' '}as a product manager watching companies write brilliant strategies in January and forget them
-            by March. OKRs became checkbox exercises. KPIs lived in dashboards nobody checked. And when AI
-            entered the picture, companies started automating processes without ever asking whether those
-            processes served their goals.
+            <span style={{ color: '#ffffff', fontWeight: 700 }}>11+ years</span>
+            {' '}leading product across SaaS, payments, and Web3. In that time, I cut{' '}
+            <span style={{ color: '#ffffff', fontWeight: 700 }}>85+ features</span>
+            {' '}before they shipped. That number taught me companies aren&apos;t usually building too little. They&apos;re{' '}
+            <span style={{ color: '#ffffff', fontWeight: 700 }}>building too much, in the wrong direction</span>
+            .
+          </p>
+          <p className="text-[13px] leading-[1.8]" style={{ color: 'rgba(255,255,255,0.5)' }}>
+            OKRs become checkbox exercises. KPIs live in dashboards nobody checks. And when AI enters the
+            picture, companies start automating processes without ever asking whether those processes serve
+            their goals.
           </p>
           <p className="text-[13px] leading-[1.8]" style={{ color: 'rgba(255,255,255,0.5)' }}>
             Two years ago, I quit to solve this problem. The emergence of{' '}
@@ -98,11 +104,11 @@ export default function Architect() {
             , but building intelligent systems that enforce it.
           </p>
           <p className="text-[13px] leading-[1.8]" style={{ color: 'rgba(255,255,255,0.5)' }}>
-            I work across all{' '}
+            I work with{' '}
+            <span style={{ color: '#ffffff', fontWeight: 700 }}>small and mid-sized companies</span>
+            , across all{' '}
             <span style={{ color: '#ffffff', fontWeight: 700 }}>three layers</span>
-            : I audit your{' '}
-            <span style={{ color: '#ffffff', fontWeight: 700 }}>strategy</span>
-            , map your operations, design the alignment layer that connects them, and then build the actual
+            : I audit your strategy, map your operations, design the alignment layer that connects them, and then build the actual
             agents that make it all work. I don&apos;t hand you a PDF and disappear. I don&apos;t automate
             blindly and hope for the best.{' '}
             <span style={{ color: 'rgba(255,255,255,0.85)' }}>

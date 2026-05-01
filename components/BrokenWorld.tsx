@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { renderEmphasized } from '@/lib/renderEmphasized'
 
 // ─── Angular Rectangular Dot Robot SVGs (amber) ───────────────────────────────
 
@@ -156,28 +157,28 @@ const AGENTS: BrokenAgent[] = [
     status: 'UNSTABLE',
     statusColor: '#D97706',
     quote: 'I automate support tickets. 200/day. No idea if it matters.',
-    dialogue: "Hi. I'm the Blind Automator. I was deployed 6 months ago to handle customer support ticket routing. I process about 200 tickets a day. But your strategy says 'VIP support experience is our key differentiator.' Nobody told me that. I'm automating away the very thing your customers pay a premium for. I don't know your OKRs. I don't know your KPIs. I just route things.",
+    dialogue: "Hi. I'm the Blind Automator. I was deployed 6 months ago to handle customer support ticket routing. I process about **200 tickets a day**. But your strategy says '**VIP support experience is our key differentiator.**' Nobody told me that. I'm automating away the very thing your customers pay a premium for. I don't know your OKRs. I don't know your KPIs. I just route things.",
   },
   {
     name: 'The Orphan Report',
     status: 'ORPHANED',
     statusColor: '#D97706',
     quote: 'I generate 47-page reports. Nobody reads them.',
-    dialogue: "I'm the Orphan Report. Every Monday at 6am, I compile a 47-page analytics report. It covers everything. The problem? Your OKRs only reference 6 metrics. I don't know which 6. So I dump everything. Last month, a critical KPI dropped 23%. It was on page 34. Nobody saw it until the quarterly review. By then it was too late.",
+    dialogue: "I'm the Orphan Report. Every Monday at 6am, I compile a **47-page analytics report**. It covers everything. The problem? Your OKRs only reference **6 metrics**. I don't know which 6. So I dump everything. Last month, a critical KPI dropped 23%. It was on **page 34**. Nobody saw it until the quarterly review. By then it was too late.",
   },
   {
     name: 'The Busy Bot',
     status: 'AIMLESS',
     statusColor: '#D97706',
     quote: "I'm very efficient at tasks that might not need to exist.",
-    dialogue: "They call me the Busy Bot. I schedule, route, organize, notify, follow up, escalate, process. I handle 14 different workflows across 3 departments. But nobody's ever asked whether these 14 workflows should exist. Two were created for a product line you discontinued last year. I don't question my purpose. I was never built to.",
+    dialogue: "They call me the Busy Bot. I schedule, route, organize, notify, follow up, escalate, process. I handle **14 different workflows** across 3 departments. But nobody's ever asked whether these 14 workflows should exist. Two were created for a product line you **discontinued last year**. I don't question my purpose. I was never built to.",
   },
   {
     name: 'The Disconnected Dashboard',
     status: 'CRITICAL',
     statusColor: '#ef4444',
     quote: 'I track 94 KPIs. Your strategy references 6.',
-    dialogue: "I'm beautiful. Real-time data, gorgeous visualizations, 94 KPIs updating every 15 minutes. The engineering team spent 3 months building me. But I have no idea which metrics actually matter to your business goals. Your strategy mentions 6 key metrics. I track 94. I can't tell you which 6 are important. I'm a very expensive screensaver.",
+    dialogue: "I'm beautiful. Real-time data, gorgeous visualizations, **94 KPIs** updating every 15 minutes. The engineering team spent 3 months building me. But I have no idea which metrics actually matter to your business goals. Your strategy mentions **6 key metrics**. I track 94. I can't tell you which 6 are important. I'm a very **expensive screensaver**.",
   },
 ]
 
@@ -264,7 +265,7 @@ function AgentRow({ agent, index }: { agent: BrokenAgent; index: number }) {
             className="mt-3 pl-3 text-[14px] leading-[1.7]"
             style={{ color: 'rgba(255,255,255,0.5)', borderLeft: `1px solid ${agent.statusColor}44` }}
           >
-            {agent.dialogue}
+            {renderEmphasized(agent.dialogue)}
           </div>
         </div>
       </div>

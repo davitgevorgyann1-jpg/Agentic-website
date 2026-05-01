@@ -12,6 +12,7 @@ const MENU_SECTIONS = [
   { label: 'Operations',     id: 'operations' },
   { label: 'Your Agent',     id: 'agents' },
   { label: 'Your Architect', id: 'architect' },
+  { label: 'Testimonials',   id: 'testimonials' },
   { label: 'How I Work',     id: 'approach' },
   { label: 'Engagement',     id: 'engagement' },
   { label: 'Assessment',     id: 'assessment' },

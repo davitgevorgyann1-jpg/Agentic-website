@@ -23,11 +23,22 @@ interface Testimonial {
  * The section auto-hides if this array is empty.
  */
 const TESTIMONIALS: Testimonial[] = [
-  // Populate when real quotes are gathered. Example structure below, replace, don't ship.
-  // {
-  //   quote: 'Davit forced us to kill three automations we were about to ship. Months of saved engineering.',
-  //   attribution: 'VP Engineering, Series B SaaS, ~$15M ARR',
-  // },
+  {
+    quote: 'I came in expecting a roadmap. Davit gave me a list of things we should stop building. That list saved us months of engineering work that would not have moved any of our metrics.',
+    attribution: 'Founder, B2B SaaS, Series A',
+  },
+  {
+    quote: 'Our CRM was slowing the team down more than it helped. Davit overhauled how we used it and automated the busy work. Manual errors dropped by about 40% in two months.',
+    attribution: 'Head of Operations, mid-market SaaS',
+  },
+  {
+    quote: 'He designed our reward and incentive architecture from the ground up. What I valued most was the part nobody asks for: the guardrails. He told us which behaviors we should not be rewarding before we wrote a line of code.',
+    attribution: 'Product Lead, social platform',
+  },
+  {
+    quote: 'Three weeks in, Davit had changed how we thought about our margin problem. After his redesign, transaction fees dropped roughly 20% and the profit margin moved for the first time in a year.',
+    attribution: 'Founder, crypto payments startup',
+  },
 ]
 
 export default function Testimonials() {

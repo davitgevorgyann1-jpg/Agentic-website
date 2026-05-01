@@ -10,6 +10,7 @@ const SECTION_PATHS = [
   'operations',
   'agents',
   'architect',
+  'testimonials',
   'approach',
   'engagement',
   'assessment',
