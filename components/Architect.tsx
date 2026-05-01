@@ -83,9 +83,13 @@ export default function Architect() {
           className="flex flex-col gap-4 mb-10"
         >
           <p className="text-[13px] leading-[1.8]" style={{ color: 'rgba(255,255,255,0.5)' }}>
-            I spent{' '}
-            <span style={{ color: '#ffffff', fontWeight: 700 }}>11+ years</span>
-            {' '}leading product across SaaS, payments, and Web3. In that time, I cut{' '}
+            I spent 11+ years leading product across SaaS, payments, and Web3. Risk products at{' '}
+            <span style={{ color: '#ffffff', fontWeight: 700 }}>Deloitte</span>
+            . CRM platform at{' '}
+            <span style={{ color: '#ffffff', fontWeight: 700 }}>Sporty</span>
+            . Incentive architecture at{' '}
+            <span style={{ color: '#ffffff', fontWeight: 700 }}>Gettr</span>
+            . In that time, I cut{' '}
             <span style={{ color: '#ffffff', fontWeight: 700 }}>85+ features</span>
             {' '}before they shipped. That number taught me companies aren&apos;t usually building too little. They&apos;re{' '}
             <span style={{ color: '#ffffff', fontWeight: 700 }}>building too much, in the wrong direction</span>
