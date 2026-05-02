@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react'
 import CalendlyOverlay from '@/components/CalendlyOverlay'
 import './globals.css'
 
@@ -62,6 +63,7 @@ export default function RootLayout({
       <body className={`${jetbrains.className} antialiased`} style={{ background: '#0a0a0f' }}>
         {children}
         <CalendlyOverlay />
+        <Analytics />
       </body>
     </html>
   )
